@@ -6,15 +6,28 @@ export interface IEvent {
   calendarId: number;
 }
 
+export interface IDialogFormProps {
+  openDialog: INewEvent | null;
+  calendar: ICalendar[];
+  OnClose: () => void;
+}
+
+export interface INewEvent {
+  id?: number;
+  date: string;
+  time?: string;
+  desc: string;
+  calendarId: number;
+}
 export interface ICalendar {
   id: number;
   name: string;
   color: string;
 }
-
+export type IEventWithCalendar = IEvent & { calendar: ICalendar };
 export interface ICalendarCell {
   date: string;
-  events: (IEvent & { calendar: ICalendar })[];
+  events: IEventWithCalendar[];
   dayOfTheWeek: number;
 }
 
