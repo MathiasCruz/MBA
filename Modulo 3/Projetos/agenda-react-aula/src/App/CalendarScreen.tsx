@@ -66,15 +66,9 @@ export default function DenseTable() {
     calendars,
     calendarsSelected
   );
+
   const firtDate = weeksGen[0][0].date;
   const lastDate = weeksGen[weeksGen.length - 1][6].date;
-
-  function ToogleCalendar(index: number) {
-    const newSelectedCalendar = [...calendarsSelected];
-    newSelectedCalendar[index] = !newSelectedCalendar[index];
-    setCalendarsSelected(newSelectedCalendar);
-  }
-
   useEffect(() => {
     Promise.all([GetCalendars(), GetEvents(firtDate, lastDate)]).then(
       ([calendars, events]) => {
@@ -84,6 +78,16 @@ export default function DenseTable() {
       }
     );
   }, [firtDate, lastDate]);
+
+  function ToogleCalendar(index: number) {
+    const newSelectedCalendar = [...calendarsSelected];
+    newSelectedCalendar[index] = !newSelectedCalendar[index];
+    setCalendarsSelected(newSelectedCalendar);
+  }
+  function refreshScreen() {
+    GetEvents(firtDate, lastDate).then(setEvents);
+  }
+
   function openNewEvent() {
     setNewEvent({ date: GetToday(), desc: '', calendarId: calendars[0].id });
     console.log(calendars[0].id);
@@ -159,6 +163,10 @@ export default function DenseTable() {
           openDialog={newEvent}
           OnClose={() => setNewEvent(null)}
           calendar={calendars}
+          OnSave={() => {
+            setNewEvent(null);
+            refreshScreen();
+          }}
         />
       </Box>
     </Box>
