@@ -9,23 +9,44 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { CreateEvents, IDialogFormProps } from '../Backend/backend';
+import {
+  CreateEvents,
+  IDialogFormProps,
+  INewEvent,
+  IValidateEventError,
+} from '../Backend/backend';
+import { EINPROGRESS } from 'constants';
 
 export default function EventDialogForm(props: IDialogFormProps) {
   const { openDialog, calendar } = props;
   const [event, setEvent] = useState(openDialog);
-
+  const [error, setError] = useState<IValidateEventError>({});
   useEffect(() => {
     setEvent(openDialog);
-    console.log(openDialog?.calendarId);
+    setError({});
   }, [openDialog]);
 
   function saveEvent(evt: React.FormEvent) {
     evt.preventDefault();
     if (event) {
-      CreateEvents(event).then(props.OnClose);
-      props.OnSave();
+      if (ValidateForm(event)) {
+        CreateEvents(event).then(props.OnClose);
+        props.OnSave();
+      }
     }
+  }
+  function ValidateForm(event: INewEvent): boolean {
+    const currentError: IValidateEventError = {};
+    if (event) {
+      if (!event.date) {
+        currentError['date'] = 'Data deve ser preenchida';
+      } else if (!event.desc) {
+        currentError['desc'] = 'Descrição deve ser preenchida';
+      }
+      setError(currentError);
+      return Object.keys(currentError).length === 0;
+    }
+    return false;
   }
   return (
     <div>
@@ -49,6 +70,8 @@ export default function EventDialogForm(props: IDialogFormProps) {
                   onChange={evt =>
                     setEvent({ ...event, date: evt.target.value })
                   }
+                  error={!!error.date}
+                  helperText={error.date}
                   fullWidth
                 />
                 <TextField
@@ -58,6 +81,8 @@ export default function EventDialogForm(props: IDialogFormProps) {
                   label="Descrição"
                   fullWidth
                   value={event.desc}
+                  error={!!error.desc}
+                  helperText={error.desc}
                   onChange={evt =>
                     setEvent({ ...event, desc: evt.target.value })
                   }

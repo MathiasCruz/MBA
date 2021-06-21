@@ -32,6 +32,10 @@ export interface ICalendarCell {
   dayOfTheWeek: number;
 }
 
+export interface IValidateEventError {
+  [field: string]: string;
+}
+
 export function GetCalendars(): Promise<ICalendar[]> {
   return fetch('http://localhost:8080/calendars').then(resp => {
     return resp.json();
