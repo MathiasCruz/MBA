@@ -12,3 +12,8 @@ export async function GetAllBillsApi(): Promise<IDespesas[]> {
     return resp.json();
   });
 }
+
+export function getNewUrl(year: string, month: string): string {
+  const fomatted = month.padStart(2, '0');
+  return `/despesas?mes=${year}-${fomatted}&_sort=01`;
+}

@@ -3,7 +3,7 @@ import { IDespesas } from '../Interfaces/IDespesas';
 export function GetActualYearMonth(): string {
   const actualDate = new Date();
   const year = actualDate.getFullYear();
-  const month = actualDate.getMonth();
+  const month = actualDate.getMonth() + 1;
 
   return `${year}-${month.toString().padStart(2, '0')}`;
 }

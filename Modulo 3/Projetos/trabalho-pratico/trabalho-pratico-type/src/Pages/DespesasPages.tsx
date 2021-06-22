@@ -33,12 +33,16 @@ export default function DespesasPages() {
     getFilteredBills(selectedDate).then(resp => setBills(resp));
     console.log(bills);
   }, [selectedDate]);
-  console.log(allBills);
+
+  function changeSelectedDate(newDate: string) {
+    console.log(newDate);
+    setSelectedDate(newDate);
+  }
   return (
     <>
-      {allBills && (
+      {bills && (
         <div>
-          <SelectMaterial />
+          <SelectMaterial onChangeSelect={changeSelectedDate} />
           <TableContainer>
             <TableHead>
               {' '}
