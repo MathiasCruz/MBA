@@ -59,3 +59,20 @@ export function CreateEvents(newEvent: INewEvent): Promise<IEvent> {
     return resp.json();
   });
 }
+export function UpdateEvents(updatedEvent: INewEvent): Promise<IEvent> {
+  return fetch(`http://localhost:8080/events/${updatedEvent.id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(updatedEvent),
+  }).then(resp => {
+    return resp.json();
+  });
+}
+
+export function DeletEvents(eventId: number): Promise<void> {
+  return fetch(`http://localhost:8080/events/${eventId}`, {
+    method: 'DELETE',
+  }).then(resp => {
+    return resp.json();
+  });
+}

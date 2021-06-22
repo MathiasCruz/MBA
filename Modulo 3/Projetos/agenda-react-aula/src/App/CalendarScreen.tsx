@@ -19,40 +19,6 @@ import Calendar from './Calendar';
 import { Button } from '@material-ui/core';
 import EventDialogForm from './EventDialogForm';
 
-const useStyles = makeStyles({
-  root: { height: '100%' },
-  table: {
-    borderTop: '1px solid rgb(224,224,224)',
-    minHeight: '100%',
-    tableLayout: 'fixed',
-    '& td ~ td, th ~ th': {
-      borderLeft: '1px solid rgb(224,224,224)',
-    },
-    '&td': {
-      verticalAlign: 'top',
-      overflow: 'hidden',
-      padding: '8px 4px',
-    },
-  },
-  dayOfWeek: { fontWeight: 500, marginBottom: '4px' },
-  event: {
-    display: 'flex',
-    alignItems: 'center',
-    background: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    textAlign: 'left',
-    whiteSpace: 'nowrap',
-    marginBottom: '4px 0',
-  },
-  eventBackground: {
-    display: 'inline-block',
-    color: 'white',
-    padding: '2px',
-    borderRadius: '4px',
-  },
-});
-
 export default function DenseTable() {
   const { date } = useParams<{ date: string }>();
   const [newEvent, setNewEvent] = useState<INewEvent | null>(null);
@@ -88,9 +54,11 @@ export default function DenseTable() {
     GetEvents(firtDate, lastDate).then(setEvents);
   }
 
-  function openNewEvent() {
-    setNewEvent({ date: GetToday(), desc: '', calendarId: calendars[0].id });
-    console.log(calendars[0].id);
+  function openNewEvent(date: string) {
+    setNewEvent({ date, desc: '', calendarId: calendars[0].id });
+  }
+  function UpdateNewEvent(evt: IEvent) {
+    setNewEvent(evt);
   }
 
   function GenerateCalendar(
@@ -146,7 +114,11 @@ export default function DenseTable() {
         padding="8px 16px"
       >
         <h2>Agenda React</h2>
-        <Button variant="contained" color="primary" onClick={openNewEvent}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => openNewEvent(GetToday())}
+        >
           Novo Evento
         </Button>
         <h3>Agenda</h3>
@@ -158,7 +130,11 @@ export default function DenseTable() {
       </Box>
       <Box display="flex" flex="1" flexDirection="column">
         <CalendarsHeader month={date} />
-        <Calendar weeksGen={weeksGen} />
+        <Calendar
+          weeksGen={weeksGen}
+          onClickDay={openNewEvent}
+          onClickEvent={UpdateNewEvent}
+        />
         <EventDialogForm
           openDialog={newEvent}
           OnClose={() => setNewEvent(null)}

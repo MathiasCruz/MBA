@@ -11,27 +11,35 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import {
   CreateEvents,
+  DeletEvents,
   IDialogFormProps,
   INewEvent,
   IValidateEventError,
+  UpdateEvents,
 } from '../Backend/backend';
-import { EINPROGRESS } from 'constants';
+import { Box } from '@material-ui/core';
 
 export default function EventDialogForm(props: IDialogFormProps) {
   const { openDialog, calendar } = props;
   const [event, setEvent] = useState(openDialog);
   const [error, setError] = useState<IValidateEventError>({});
+  const isNew = !event?.id;
   useEffect(() => {
     setEvent(openDialog);
     setError({});
   }, [openDialog]);
 
+  function deleteEvent() {
+    DeletEvents(event?.id!).then(props.OnSave);
+  }
   function saveEvent(evt: React.FormEvent) {
     evt.preventDefault();
     if (event) {
       if (ValidateForm(event)) {
-        CreateEvents(event).then(props.OnClose);
-        props.OnSave();
+        if (isNew) {
+          CreateEvents(event).then(props.OnSave);
+        }
+        UpdateEvents(event).then(props.OnSave);
       }
     }
   }
@@ -56,7 +64,9 @@ export default function EventDialogForm(props: IDialogFormProps) {
         aria-labelledby="form-dialog-title"
       >
         <form onSubmit={saveEvent}>
-          <DialogTitle id="form-dialog-title">Novo Evento</DialogTitle>
+          <DialogTitle id="form-dialog-title">
+            {isNew ? 'Novo Evento' : 'Editar Evento'}
+          </DialogTitle>
           <DialogContent>
             {event && (
               <>
@@ -125,6 +135,10 @@ export default function EventDialogForm(props: IDialogFormProps) {
           </DialogContent>
 
           <DialogActions>
+            <Button onClick={deleteEvent} color="primary">
+              Excluir
+            </Button>
+            <Box flex="1"></Box>
             <Button onClick={props.OnClose} color="primary">
               Cancelar
             </Button>

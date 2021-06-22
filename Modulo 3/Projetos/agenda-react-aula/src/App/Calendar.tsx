@@ -6,12 +6,16 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { makeStyles } from '@material-ui/core/styles';
 import { DAYS_OF_WEEK } from './dateFunctions';
-import { ICalendarCell } from '../Backend/backend';
+import { ICalendarCell, IEvent, INewEvent } from '../Backend/backend';
 import { Box, Icon } from '@material-ui/core';
+import React from 'react';
 
 interface IcalendarProps {
   weeksGen: ICalendarCell[][];
+  onClickDay: (date: string) => void;
+  onClickEvent: (evt: IEvent) => void;
 }
+
 export default function Calendar(props: IcalendarProps) {
   const { weeksGen } = props;
   const useStyles = makeStyles({
@@ -47,6 +51,11 @@ export default function Calendar(props: IcalendarProps) {
       borderRadius: '4px',
     },
   });
+  function handleClickCell(evt: React.MouseEvent, date: string) {
+    if (evt.target === evt.currentTarget) {
+      props.onClickDay(date);
+    }
+  }
 
   const classes = useStyles();
   return (
@@ -68,12 +77,21 @@ export default function Calendar(props: IcalendarProps) {
             return (
               <TableRow key={id}>
                 {week.map(cell => (
-                  <TableCell key={cell.date} component="th" scope="row">
+                  <TableCell
+                    key={cell.date}
+                    component="th"
+                    scope="row"
+                    onClick={me => handleClickCell(me, cell.date)}
+                  >
                     <div className={classes.dayOfWeek}>{cell.dayOfTheWeek}</div>
                     {cell.events.map(event => {
                       const color = event.calendar.color;
                       return (
-                        <button key={event.id} className={classes.event}>
+                        <button
+                          key={event.id}
+                          className={classes.event}
+                          onClick={() => props.onClickEvent(event)}
+                        >
                           {event.time && (
                             <>
                               <Icon fontSize="inherit" style={{ color }}>
