@@ -18,6 +18,7 @@ import { IDespesas } from '../Interfaces/IDespesas';
 export default function DespesasPages() {
   const CABECALHO = ['Despesas', 'Categoria', 'Dia', 'Valor'];
   const [allBills, setAllBills] = useState<IDespesas[]>([]);
+  const [total, setTotal] = useState<number>(0);
   const [selectedDate, setSelectedDate] = useState<string>(
     GetActualYearMonth()
   );
@@ -27,6 +28,12 @@ export default function DespesasPages() {
     GetAllBillsApi().then(resp => {
       setAllBills(resp);
     });
+  }
+  function ReturnTotalBills() {
+    let valorTotal = bills.reduce((total, numero) => total + numero.valor, 0);
+    console.log(valorTotal);
+    // setTotal(totalValue);
+    return valorTotal.toLocaleString();
   }
 
   useEffect(() => {
@@ -42,6 +49,7 @@ export default function DespesasPages() {
     <>
       {bills && (
         <div>
+          <div>{ReturnTotalBills()}</div>
           <SelectMaterial onChangeSelect={changeSelectedDate} />
           <TableContainer>
             <TableHead>

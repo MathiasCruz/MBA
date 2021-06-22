@@ -37,7 +37,7 @@ export default function SelectMaterial(props: ISelectProperties) {
         </FormControl>
         <FormControl>
           <Select
-            value={MONTHS_OF_YEAR[0]}
+            value={0}
             onChange={evt => {
               handleClick(evt.target.value);
             }}
