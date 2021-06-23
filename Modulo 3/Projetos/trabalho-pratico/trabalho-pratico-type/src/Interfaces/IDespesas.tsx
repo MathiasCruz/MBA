@@ -6,6 +6,7 @@ export interface IDespesas {
   mes: string;
   dia: string;
 }
-export interface ISelectEvents {
+export interface IDespesasPagesParams {
   bills: IDespesas[];
+  children: string;
 }

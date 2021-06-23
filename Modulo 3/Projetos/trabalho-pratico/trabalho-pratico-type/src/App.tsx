@@ -1,25 +1,40 @@
-import React from 'react';
+import { Box } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
 import {
   Redirect,
   Route,
   BrowserRouter as Router,
-  Switch,
+  useHistory,
 } from 'react-router-dom';
-import { GetActualYearMonth } from './Helpers/dateHelpers';
+import { getFilteredBills } from './ApiBackend/ApiDespesasInfo';
+import SelectMaterial from './Components/SelectMaterial';
+import { IDespesas } from './Interfaces/IDespesas';
 import DespesasPages from './Pages/DespesasPages';
 
 function App() {
-  const date = GetActualYearMonth();
-  console.log(date);
+  const [bills, setBills] = useState<IDespesas[]>([]);
+  const history = useHistory();
+
+  useEffect(() => {
+    history.push(`/despesas`);
+  }, []);
+
+  function changeSelectedDate(data: string) {
+    if (data) {
+      getFilteredBills(data).then(resp => setBills(resp));
+      history.push(`/despesas/${data}`);
+    }
+  }
   return (
-    <Router>
-      <Switch>
-        <Route path="/despesas/:date">
-          <DespesasPages />
-        </Route>
-        <Redirect to={{ pathname: '/despesas/' + date }}></Redirect>
-      </Switch>
-    </Router>
+    <Box
+      display="flex"
+      flexDirection="column"
+      margin="20px"
+      justifyItems="center"
+    >
+      <SelectMaterial onChangeSelect={changeSelectedDate} />
+      <DespesasPages bills={bills} children="" />{' '}
+    </Box>
   );
 }
 
