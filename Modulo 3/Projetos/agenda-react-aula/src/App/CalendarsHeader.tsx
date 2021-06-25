@@ -2,10 +2,8 @@ import Box from '@material-ui/core/Box';
 import { Avatar, Icon, IconButton } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { AddMonth, monthFormatterString } from './dateFunctions';
-
-interface ICalendarheaderPros {
-  month: string;
-}
+import { ICalendarheaderPros } from '../Backend/backend';
+import UserMenu from './UserMenu';
 export default function CalendarsHeader(props: ICalendarheaderPros) {
   const { month } = props;
   return (
@@ -19,11 +17,7 @@ export default function CalendarsHeader(props: ICalendarheaderPros) {
       <Box flex="1" margin-left="16px" component="h3">
         {monthFormatterString(month)} de 2021
       </Box>
-      <IconButton>
-        <Avatar>
-          <Icon>person</Icon>
-        </Avatar>
-      </IconButton>
+      <UserMenu OnSignOut={props.OnSignOut} user={props.user} />
     </Box>
   );
 }

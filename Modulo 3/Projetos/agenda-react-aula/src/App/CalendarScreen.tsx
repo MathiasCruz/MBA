@@ -6,6 +6,7 @@ import {
   GetEvents,
   ICalendar,
   ICalendarCell,
+  ICalendarScreen,
   IEvent,
   IEventWithCalendar,
   INewEvent,
@@ -19,7 +20,7 @@ import Calendar from './Calendar';
 import { Button } from '@material-ui/core';
 import EventDialogForm from './EventDialogForm';
 
-export default function DenseTable() {
+export default function DenseTable(props: ICalendarScreen) {
   const { date } = useParams<{ date: string }>();
   const [newEvent, setNewEvent] = useState<INewEvent | null>(null);
   console.log(date);
@@ -129,7 +130,11 @@ export default function DenseTable() {
         />
       </Box>
       <Box display="flex" flex="1" flexDirection="column">
-        <CalendarsHeader month={date} />
+        <CalendarsHeader
+          month={date}
+          OnSignOut={props.OnSignOut}
+          user={props.user}
+        />
         <Calendar
           weeksGen={weeksGen}
           onClickDay={openNewEvent}

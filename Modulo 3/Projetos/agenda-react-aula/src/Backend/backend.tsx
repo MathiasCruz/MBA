@@ -36,43 +36,91 @@ export interface IValidateEventError {
   [field: string]: string;
 }
 
+export interface IUser {
+  name: string;
+  email: string;
+}
+export interface ImenuUserProps {
+  OnSignOut: () => void;
+  user: IUser;
+}
+
+export interface ICalendarheaderPros {
+  month: string;
+  OnSignOut: () => void;
+  user: IUser;
+}
+
+export interface ICalendarScreen {
+  OnSignOut: () => void;
+  user: IUser;
+}
+export interface ILoginScreenProps {
+  onSignin: (user: IUser) => void;
+}
 export function GetCalendars(): Promise<ICalendar[]> {
-  return fetch('http://localhost:8080/calendars').then(resp => {
-    return resp.json();
-  });
+  return fetch('http://localhost:8080/calendars', {
+    credentials: 'include',
+  }).then(HandleResponse);
 }
 
 export function GetEvents(from: string, to: string): Promise<IEvent[]> {
   return fetch(
-    `http://localhost:8080/events?date_gte=${from}&date_lte=${to}&_sort(date,time)`
-  ).then(resp => {
-    return resp.json();
-  });
+    `http://localhost:8080/events?date_gte=${from}&date_lte=${to}&_sort(date,time)`,
+    {
+      credentials: 'include',
+    }
+  ).then(HandleResponse);
 }
 
 export function CreateEvents(newEvent: INewEvent): Promise<IEvent> {
   return fetch(`http://localhost:8080/events`, {
+    credentials: 'include',
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(newEvent),
-  }).then(resp => {
-    return resp.json();
-  });
+  }).then(HandleResponse);
 }
 export function UpdateEvents(updatedEvent: INewEvent): Promise<IEvent> {
   return fetch(`http://localhost:8080/events/${updatedEvent.id}`, {
+    credentials: 'include',
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(updatedEvent),
-  }).then(resp => {
-    return resp.json();
-  });
+  }).then(HandleResponse);
 }
 
 export function DeletEvents(eventId: number): Promise<void> {
   return fetch(`http://localhost:8080/events/${eventId}`, {
     method: 'DELETE',
-  }).then(resp => {
+    credentials: 'include',
+  }).then(HandleResponse);
+}
+
+export function getSessionLogin(): Promise<IUser> {
+  return fetch(`http://localhost:8080/auth/user`, {
+    credentials: 'include',
+  }).then(HandleResponse);
+}
+export function SignIn(email: string, password: string): Promise<IUser> {
+  return fetch(`http://localhost:8080/auth/login`, {
+    credentials: 'include',
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password }),
+  }).then(HandleResponse);
+}
+
+export function SignOut(): Promise<void> {
+  return fetch(`http://localhost:8080/auth/logout`, {
+    credentials: 'include',
+    method: 'POST',
+  }).then(HandleResponse);
+}
+
+function HandleResponse(resp: Response) {
+  if (resp.ok) {
     return resp.json();
-  });
+  }
+  throw new Error(resp.statusText);
 }
