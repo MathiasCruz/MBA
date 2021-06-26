@@ -42,19 +42,16 @@ export interface IUser {
 }
 export interface ImenuUserProps {
   OnSignOut: () => void;
-  user: IUser;
 }
 
+export interface IAuthContext {
+  user: IUser;
+  OnSignOut: () => void;
+}
 export interface ICalendarheaderPros {
   month: string;
-  OnSignOut: () => void;
-  user: IUser;
 }
 
-export interface ICalendarScreen {
-  OnSignOut: () => void;
-  user: IUser;
-}
 export interface ILoginScreenProps {
   onSignin: (user: IUser) => void;
 }

@@ -8,8 +8,9 @@ import {
   makeStyles,
   MenuItem,
 } from '@material-ui/core';
-import { useState } from 'react';
-import { ImenuUserProps, SignOut } from '../Backend/backend';
+import { useContext, useState } from 'react';
+import { SignOut } from '../Backend/backend';
+import { authContext } from './AuthContext';
 const useStyles = makeStyles({
   userDetails: {
     borderBottom: '1px solid rgb(224,224,224)',
@@ -24,7 +25,9 @@ const useStyles = makeStyles({
   },
 });
 
-export default function UserMenu(props: ImenuUserProps) {
+export default function UserMenu() {
+  const { user, OnSignOut } = useContext(authContext);
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const classes = useStyles();
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -36,7 +39,7 @@ export default function UserMenu(props: ImenuUserProps) {
 
   function SignOutLogin() {
     SignOut();
-    props.OnSignOut();
+    OnSignOut();
   }
 
   return (
@@ -61,8 +64,8 @@ export default function UserMenu(props: ImenuUserProps) {
           <Avatar>
             <Icon>person</Icon>
           </Avatar>
-          <div>{props.user.name}</div>
-          <small>{props.user.email}</small>
+          <div>{user.name}</div>
+          <small>{user.email}</small>
         </Box>
         <MenuItem onClick={SignOutLogin}>Sair</MenuItem>
       </Menu>

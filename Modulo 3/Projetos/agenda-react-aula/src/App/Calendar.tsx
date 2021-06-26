@@ -15,8 +15,7 @@ interface IcalendarProps {
   onClickDay: (date: string) => void;
   onClickEvent: (evt: IEvent) => void;
 }
-
-export default function Calendar(props: IcalendarProps) {
+export const Calendar = React.memo(function Calendar(props: IcalendarProps) {
   const { weeksGen } = props;
   const useStyles = makeStyles({
     root: { height: '100%' },
@@ -124,4 +123,4 @@ export default function Calendar(props: IcalendarProps) {
       </Table>
     </TableContainer>
   );
-}
+});

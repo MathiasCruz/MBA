@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import {
   GetCalendars,
   GetEvents,
   ICalendar,
   ICalendarCell,
-  ICalendarScreen,
   IEvent,
   IEventWithCalendar,
   INewEvent,
@@ -14,28 +12,29 @@ import {
 import { useEffect } from 'react';
 import { DAYS_OF_WEEK, GetToday } from './dateFunctions';
 import { useParams } from 'react-router-dom';
-import CalendarsView from './CalendarsView';
-import CalendarsHeader from './CalendarsHeader';
-import Calendar from './Calendar';
+import { CalendarsView } from './CalendarsView';
+import { CalendarsHeader } from './CalendarsHeader';
+import { Calendar } from './Calendar';
 import { Button } from '@material-ui/core';
 import EventDialogForm from './EventDialogForm';
+import { useMemo } from 'react';
+import { useCallback } from 'react';
 
-export default function DenseTable(props: ICalendarScreen) {
+export default function DenseTable() {
   const { date } = useParams<{ date: string }>();
   const [newEvent, setNewEvent] = useState<INewEvent | null>(null);
   console.log(date);
   const [events, setEvents] = useState<IEvent[]>([]);
   const [calendars, setCalendars] = useState<ICalendar[]>([]);
   const [calendarsSelected, setCalendarsSelected] = useState<boolean[]>([]);
-  const weeksGen = GenerateCalendar(
-    date + '-01',
-    events,
-    calendars,
-    calendarsSelected
-  );
+
+  const weeksGen = useMemo(() => {
+    return GenerateCalendar(date + '-01', events, calendars, calendarsSelected);
+  }, [date, events, calendars, calendarsSelected]);
 
   const firtDate = weeksGen[0][0].date;
   const lastDate = weeksGen[weeksGen.length - 1][6].date;
+
   useEffect(() => {
     Promise.all([GetCalendars(), GetEvents(firtDate, lastDate)]).then(
       ([calendars, events]) => {
@@ -46,21 +45,25 @@ export default function DenseTable(props: ICalendarScreen) {
     );
   }, [firtDate, lastDate]);
 
-  function ToogleCalendar(index: number) {
-    const newSelectedCalendar = [...calendarsSelected];
-    newSelectedCalendar[index] = !newSelectedCalendar[index];
-    setCalendarsSelected(newSelectedCalendar);
-  }
+  const ToogleCalendar = useCallback(
+    (index: number) => {
+      const newSelectedCalendar = [...calendarsSelected];
+      newSelectedCalendar[index] = !newSelectedCalendar[index];
+      setCalendarsSelected(newSelectedCalendar);
+    },
+    [calendarsSelected]
+  );
+
   function refreshScreen() {
     GetEvents(firtDate, lastDate).then(setEvents);
   }
 
-  function openNewEvent(date: string) {
-    setNewEvent({ date, desc: '', calendarId: calendars[0].id });
-  }
-  function UpdateNewEvent(evt: IEvent) {
-    setNewEvent(evt);
-  }
+  const openNewEvent = React.useCallback(
+    (date: string) => {
+      setNewEvent({ date, desc: '', calendarId: calendars[0].id });
+    },
+    [calendars]
+  );
 
   function GenerateCalendar(
     date: string,
@@ -130,15 +133,11 @@ export default function DenseTable(props: ICalendarScreen) {
         />
       </Box>
       <Box display="flex" flex="1" flexDirection="column">
-        <CalendarsHeader
-          month={date}
-          OnSignOut={props.OnSignOut}
-          user={props.user}
-        />
+        <CalendarsHeader month={date} />
         <Calendar
           weeksGen={weeksGen}
           onClickDay={openNewEvent}
-          onClickEvent={UpdateNewEvent}
+          onClickEvent={setNewEvent}
         />
         <EventDialogForm
           openDialog={newEvent}
