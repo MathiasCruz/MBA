@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 import Box from '@material-ui/core/Box';
 import {
   GetCalendars,
   GetEvents,
   ICalendar,
   ICalendarCell,
+  IcalendarScreenState,
   IEvent,
   IEventWithCalendar,
-  INewEvent,
 } from '../Backend/backend';
 import { useEffect } from 'react';
 import { DAYS_OF_WEEK, GetToday } from './dateFunctions';
@@ -19,14 +19,17 @@ import { Button } from '@material-ui/core';
 import EventDialogForm from './EventDialogForm';
 import { useMemo } from 'react';
 import { useCallback } from 'react';
+import { reducer } from './CalendarReduce';
 
 export default function DenseTable() {
+  const [state, dispatch] = useReducer(reducer, {
+    events: [],
+    calendars: [],
+    calendarsSelected: [],
+    newEvent: null,
+  });
   const { date } = useParams<{ date: string }>();
-  const [newEvent, setNewEvent] = useState<INewEvent | null>(null);
-  console.log(date);
-  const [events, setEvents] = useState<IEvent[]>([]);
-  const [calendars, setCalendars] = useState<ICalendar[]>([]);
-  const [calendarsSelected, setCalendarsSelected] = useState<boolean[]>([]);
+  const { events, calendars, calendarsSelected, newEvent } = state;
 
   const weeksGen = useMemo(() => {
     return GenerateCalendar(date + '-01', events, calendars, calendarsSelected);
@@ -38,32 +41,20 @@ export default function DenseTable() {
   useEffect(() => {
     Promise.all([GetCalendars(), GetEvents(firtDate, lastDate)]).then(
       ([calendars, events]) => {
-        setCalendarsSelected(calendars.map(() => true));
-        setCalendars(calendars);
-        setEvents(events);
+        dispatch({ type: 'load', payLoad: { events, calendars } });
       }
     );
   }, [firtDate, lastDate]);
 
-  const ToogleCalendar = useCallback(
-    (index: number) => {
-      const newSelectedCalendar = [...calendarsSelected];
-      newSelectedCalendar[index] = !newSelectedCalendar[index];
-      setCalendarsSelected(newSelectedCalendar);
-    },
-    [calendarsSelected]
-  );
-
   function refreshScreen() {
-    GetEvents(firtDate, lastDate).then(setEvents);
+    GetEvents(firtDate, lastDate).then(events =>
+      dispatch({ type: 'load', payLoad: { events } })
+    );
   }
 
-  const openNewEvent = React.useCallback(
-    (date: string) => {
-      setNewEvent({ date, desc: '', calendarId: calendars[0].id });
-    },
-    [calendars]
-  );
+  const CloseDialog = useCallback(() => {
+    dispatch({ type: 'closeDialog' });
+  }, []);
 
   function GenerateCalendar(
     date: string,
@@ -121,30 +112,26 @@ export default function DenseTable() {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => openNewEvent(GetToday())}
+          onClick={() => dispatch({ type: 'new', payload: GetToday() })}
         >
           Novo Evento
         </Button>
         <h3>Agenda</h3>
         <CalendarsView
           calendars={calendars}
-          toogleCalendar={ToogleCalendar}
+          dispatch={dispatch}
           calendarSelected={calendarsSelected}
         />
       </Box>
       <Box display="flex" flex="1" flexDirection="column">
         <CalendarsHeader month={date} />
-        <Calendar
-          weeksGen={weeksGen}
-          onClickDay={openNewEvent}
-          onClickEvent={setNewEvent}
-        />
+        <Calendar weeksGen={weeksGen} dispatch={dispatch} />
         <EventDialogForm
           openDialog={newEvent}
-          OnClose={() => setNewEvent(null)}
+          OnClose={CloseDialog}
           calendar={calendars}
           OnSave={() => {
-            setNewEvent(null);
+            dispatch({ type: 'closeDialog' });
             refreshScreen();
           }}
         />

@@ -51,7 +51,12 @@ export interface IAuthContext {
 export interface ICalendarheaderPros {
   month: string;
 }
-
+export interface IcalendarScreenState {
+  calendars: ICalendar[];
+  events: IEvent[];
+  calendarsSelected: boolean[];
+  newEvent: INewEvent | null;
+}
 export interface ILoginScreenProps {
   onSignin: (user: IUser) => void;
 }
