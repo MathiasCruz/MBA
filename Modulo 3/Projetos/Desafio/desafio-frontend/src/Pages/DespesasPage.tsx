@@ -14,9 +14,30 @@ export default function DespesasPage() {
   const [despesas, setDespesas] = useState<IDespesa[]>([]);
 
   function returnAllCategories(obj: IDespesa[]) {
-    return obj.map(search => {
-      return [search.categoria, search.valor];
-    });
+    return obj
+      .map(search => {
+        return search.categoria;
+      })
+      .filter(unique);
+  }
+  function retornaValorTotalPorCategoria(filtro: string[]) {
+    let acumulador: number = 0;
+    const NovoFiltro = filtro
+      .map(despesa => {
+        return despesas
+          .filter((a, i, b) => a.categoria === despesa)
+          .map((despesaFiltrada, index) => {
+            let valorTotal: number =
+              index === 0
+                ? (acumulador = despesaFiltrada.valor)
+                : (acumulador += despesaFiltrada.valor);
+            return { categorias: despesaFiltrada.categoria, valorTotal };
+          });
+      })
+      .filter((atual, i, despesaArray) => {
+        return despesaArray.lastIndexOf(atual);
+      });
+    return NovoFiltro;
   }
   function unique(value: string, index: number, self: string[]) {
     return self.indexOf(value) === index;
@@ -26,7 +47,8 @@ export default function DespesasPage() {
   }, [mesIso]);
   if (despesas) {
     const filtroCategorias = returnAllCategories(despesas);
-    console.log(filtroCategorias);
+    const filtro = retornaValorTotalPorCategoria(filtroCategorias);
+    console.log(filtro);
     return (
       <Container maxWidth="sm">
         <SelectMaterial ano={ano} mes={mes} />
