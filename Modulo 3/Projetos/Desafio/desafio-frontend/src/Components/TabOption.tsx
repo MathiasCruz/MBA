@@ -13,7 +13,7 @@ import {
   TableHead,
   TableRow,
 } from '@material-ui/core';
-import { ISimpleTabsProps } from '../Interfaces/ISimpleTabsProps';
+import { IDespesasFiltrado } from '../Interfaces/ISimpleTabsProps';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -52,14 +52,15 @@ const useStyles = makeStyles((theme: Theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
+    margin: '40px',
   },
   table: {
     width: '100%',
   },
 }));
 
-export default function SimpleTabs(props: ISimpleTabsProps) {
-  const { despesas } = props;
+export default function SimpleTabs(props: IDespesasFiltrado) {
+  const { despesasMes, categoriaEValor, valorTotal } = props;
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -69,6 +70,7 @@ export default function SimpleTabs(props: ISimpleTabsProps) {
 
   return (
     <div className={classes.root}>
+      <div>Valor Total: {valorTotal?.toFixed(2)}</div>
       <AppBar position="static">
         <Tabs
           value={value}
@@ -80,6 +82,24 @@ export default function SimpleTabs(props: ISimpleTabsProps) {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}></TabPanel>
+      <TableContainer component="div">
+        <Table className={classes.table} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Categoria</TableCell>
+              <TableCell>Valor</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {categoriaEValor.map((categoria, i) => (
+              <TableRow key={i}>
+                <TableCell>{categoria.categoria}</TableCell>
+                <TableCell>{categoria.valor}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
       <TabPanel value={value} index={1}>
         <TableContainer component="div">
           <Table className={classes.table} aria-label="simple table">
@@ -92,12 +112,12 @@ export default function SimpleTabs(props: ISimpleTabsProps) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {despesas.map((despesa, i) => (
+              {despesasMes.map((despesasMes, i) => (
                 <TableRow key={i}>
-                  <TableCell>{despesa.descricao}</TableCell>
-                  <TableCell>{despesa.categoria}</TableCell>
-                  <TableCell align="right">{despesa.dia}</TableCell>
-                  <TableCell align="right">{despesa.valor}</TableCell>
+                  <TableCell>{despesasMes.descricao}</TableCell>
+                  <TableCell>{despesasMes.categoria}</TableCell>
+                  <TableCell align="right">{despesasMes.dia}</TableCell>
+                  <TableCell align="right">{despesasMes.valor}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
