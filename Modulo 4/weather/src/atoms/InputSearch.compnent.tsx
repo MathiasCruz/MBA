@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import useSearch from '../lib/UseSearch';
 import SearchIcon from '../SVG/SearchIcon.component';
 
 interface ISearchInputProps {
@@ -36,6 +37,12 @@ const SearchInput = styled.input<ISearchInputProps>`
 
 const InputSearch: React.FC<InputSearchProps> = ({ found }) => {
   const [name, setName] = useState('');
+  const { filterCities } = useSearch();
+
+  useEffect(() => {
+    filterCities(name);
+  }, [name]);
+
   return (
     <SearchBar>
       <SearchInput

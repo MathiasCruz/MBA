@@ -1,6 +1,9 @@
+import { useAtom } from 'jotai';
 import React from 'react';
 import styled from 'styled-components';
 import InputSearch from '../atoms/InputSearch.compnent';
+import { citiesAtom } from '../global';
+import useSearch from '../lib/UseSearch';
 
 const Container = styled.div`
   display: flex;
@@ -14,9 +17,11 @@ const Container = styled.div`
 `;
 
 const CitySearch = () => {
+  const { cities } = useAtom(citiesAtom);
   return (
     <Container>
       <InputSearch found />
+      <div>{}</div>
     </Container>
   );
 };
