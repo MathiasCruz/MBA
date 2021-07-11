@@ -2,7 +2,7 @@ import { useAtom } from 'jotai';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { citiesQuery, fetchCities } from '../api';
-import CityEntity from '../api/Entities/entityDefinition';
+import { CityEntity } from '../api/Entities/entityDefinition';
 import { citiesAtom } from '../global/index';
 
 const useSearch = () => {
