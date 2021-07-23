@@ -1,5 +1,9 @@
 import { IPontuacao } from './IPontuacao';
 
+export interface ICampeonato {
+  numero: number;
+  partidas: [IPartida];
+}
 export interface IPartida {
   visitante: string;
   resultado: string;

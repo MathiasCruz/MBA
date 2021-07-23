@@ -6,7 +6,7 @@ function App() {
   return (
     <HashRouter>
       <Switch>
-        <Route path="partidas/:ano">
+        <Route path="/partidas/:ano">
           <TelaPartidas />
         </Route>
         <Redirect to={{ pathname: '/partidas/' + anoIni }} />
