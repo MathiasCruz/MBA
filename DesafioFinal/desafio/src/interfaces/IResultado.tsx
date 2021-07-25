@@ -7,6 +7,7 @@ export interface IResultado {
   golsPro: number;
   golsContra: number;
   saldoGols: number;
+  img: string;
 }
 
 export type Resultado = {
@@ -18,4 +19,5 @@ export type Resultado = {
   golsPro: number;
   golsContra: number;
   saldoGols: number;
+  img: string;
 };

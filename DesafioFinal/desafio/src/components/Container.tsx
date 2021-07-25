@@ -1,18 +1,13 @@
-import React from 'react';
 import styled from 'styled-components';
-import { Menu } from './Menu';
 
-const ContainerStyle = styled.div`
+const Container = styled.div`
   display: flex;
-  width: 100vw;
-  height: 100vh;
-  background-color: blueviolet;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  background-color: #cfcfcf;
 `;
-const Container: React.FC = () => {
-  return (
-    <ContainerStyle>
-      <Menu> React Desafio Final</Menu>
-    </ContainerStyle>
-  );
-};
+
 export default Container;

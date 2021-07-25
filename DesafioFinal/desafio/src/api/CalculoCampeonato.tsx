@@ -14,6 +14,7 @@ function CalcularResultadoCampeonato(
     golsPro: 0,
     golsContra: 0,
     saldoGols: 0,
+    img: '',
   };
   resultado.time = time;
 
@@ -21,42 +22,101 @@ function CalcularResultadoCampeonato(
     campeonato,
     time
   );
-  const ultimoResultado = timeFiltradoVistante;
-  if (ultimoResultado) {
-    resultado.time = ultimoResultado.visitante;
-    resultado.pontos = ultimoResultado.pontuacao_geral_visitante.total_pontos;
-    resultado.vitorias =
-      ultimoResultado.pontuacao_geral_visitante.total_vitorias;
-    resultado.empates = ultimoResultado.pontuacao_geral_visitante.total_empates;
-    resultado.derrotas =
-      ultimoResultado.pontuacao_geral_visitante.total_derrotas;
-    resultado.golsPro =
-      ultimoResultado.pontuacao_geral_visitante.total_gols_marcados;
-    resultado.golsContra =
-      ultimoResultado.pontuacao_geral_visitante.total_gols_sofridos;
-    resultado.saldoGols =
-      ultimoResultado.pontuacao_geral_visitante.total_gols_marcados -
-      ultimoResultado.pontuacao_geral_visitante.total_gols_sofridos;
+
+  const timeFiltradoMandante = FiltrarResultadosComoMandante(campeonato, time);
+  if (timeFiltradoVistante && timeFiltradoMandante) {
+    if (
+      timeFiltradoMandante.pontuacao_geral_mandante.total_pontos >
+      timeFiltradoVistante.pontuacao_geral_visitante.total_pontos
+    ) {
+      resultado.time = timeFiltradoMandante.mandante;
+      resultado.pontos =
+        timeFiltradoMandante.pontuacao_geral_mandante.total_pontos;
+      resultado.vitorias =
+        timeFiltradoMandante.pontuacao_geral_mandante.total_vitorias;
+      resultado.empates =
+        timeFiltradoMandante.pontuacao_geral_mandante.total_empates;
+      resultado.derrotas =
+        timeFiltradoMandante.pontuacao_geral_mandante.total_derrotas;
+      resultado.golsPro =
+        timeFiltradoMandante.pontuacao_geral_mandante.total_gols_marcados;
+      resultado.golsContra =
+        timeFiltradoMandante.pontuacao_geral_mandante.total_gols_sofridos;
+      resultado.saldoGols =
+        timeFiltradoMandante.pontuacao_geral_mandante.total_gols_marcados -
+        timeFiltradoMandante.pontuacao_geral_mandante.total_gols_sofridos;
+    } else {
+      resultado.time = timeFiltradoVistante.visitante;
+      resultado.pontos =
+        timeFiltradoVistante.pontuacao_geral_visitante.total_pontos;
+      resultado.vitorias =
+        timeFiltradoVistante.pontuacao_geral_visitante.total_vitorias;
+      resultado.empates =
+        timeFiltradoVistante.pontuacao_geral_visitante.total_empates;
+      resultado.derrotas =
+        timeFiltradoVistante.pontuacao_geral_visitante.total_derrotas;
+      resultado.golsPro =
+        timeFiltradoVistante.pontuacao_geral_visitante.total_gols_marcados;
+      resultado.golsContra =
+        timeFiltradoVistante.pontuacao_geral_visitante.total_gols_sofridos;
+      resultado.saldoGols =
+        timeFiltradoVistante.pontuacao_geral_visitante.total_gols_marcados -
+        timeFiltradoVistante.pontuacao_geral_visitante.total_gols_sofridos;
+    }
   }
+  resultado.img = removeAcento(resultado.time).replace(' ', '_') + '.png';
+
   return resultado;
+}
+
+function removeAcento(text: string) {
+  text = text.toLowerCase();
+  text = text.replace(new RegExp('[ÁÀÂÃ]', 'gi'), 'a');
+  text = text.replace(new RegExp('[ÉÈÊ]', 'gi'), 'e');
+  text = text.replace(new RegExp('[ÍÌÎ]', 'gi'), 'i');
+  text = text.replace(new RegExp('[ÓÒÔÕ]', 'gi'), 'o');
+  text = text.replace(new RegExp('[ÚÙÛ]', 'gi'), 'u');
+  text = text.replace(new RegExp('[Ç]', 'gi'), 'c');
+  return text;
 }
 
 function FiltrarResultadosComoVistitante(
   campeonato: ICampeonato[],
   time: string
 ) {
-  let timeFiltrado: IPartida[][] = [];
+  let timeFiltradoVisitante: IPartida[][] = [];
   for (let i = 0; i < campeonato.length; i++) {
-    let filtrado = campeonato[i].partidas.filter(
+    let filtroVisitante = campeonato[i].partidas.filter(
       partida => partida.visitante === time
     );
-    if (filtrado.length > 0) {
-      timeFiltrado.push(filtrado);
+    if (filtroVisitante.length > 0) {
+      timeFiltradoVisitante.push(filtroVisitante);
     }
   }
-  const ultimoResultado = timeFiltrado[timeFiltrado.length - 1].pop();
-  return ultimoResultado;
+
+  const ultimoResultadoVistante =
+    timeFiltradoVisitante[timeFiltradoVisitante.length - 1].pop();
+  return ultimoResultadoVistante;
 }
+function FiltrarResultadosComoMandante(
+  campeonato: ICampeonato[],
+  time: string
+) {
+  let timeFiltradoMandante: IPartida[][] = [];
+  for (let i = 0; i < campeonato.length; i++) {
+    let filtromandante = campeonato[i].partidas.filter(
+      partida => partida.mandante === time
+    );
+    if (filtromandante.length > 0) {
+      timeFiltradoMandante.push(filtromandante);
+    }
+  }
+
+  const ultimoResultadoMandante =
+    timeFiltradoMandante[timeFiltradoMandante.length - 1].pop();
+  return ultimoResultadoMandante;
+}
+
 function FiltraNomesUnicos(campeonato: ICampeonato[]) {
   let times: string[] = [];
   for (let i = 0; i < campeonato.length; i++) {
@@ -87,5 +147,21 @@ export function PreencherResultadoPartida(
 function OrdenarTimesPorPontos(timeA: IResultado, timeB: IResultado) {
   if (timeA.pontos < timeB.pontos) return 1;
   if (timeA.pontos > timeB.pontos) return -1;
+  if (timeA.pontos === timeB.pontos) {
+    if (timeA.vitorias > timeB.vitorias) return -1;
+    if (timeA.vitorias < timeB.vitorias) return 1;
+    if (timeA.vitorias === timeB.vitorias) {
+      if (timeA.saldoGols > timeB.saldoGols) return -1;
+      if (timeA.saldoGols < timeB.saldoGols) return 1;
+      if (timeA.saldoGols === timeB.saldoGols) {
+        if (timeA.golsPro > timeB.golsPro) return -1;
+        if (timeA.golsPro < timeB.golsPro) return 1;
+        if (timeA.golsPro === timeB.golsPro) {
+          if (timeA.derrotas > timeB.derrotas) return -1;
+          if (timeA.derrotas < timeB.derrotas) return 1;
+        }
+      }
+    }
+  }
   return 0;
 }

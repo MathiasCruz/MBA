@@ -1,7 +1,7 @@
 import React from 'react';
 import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
 import TelaPartidas from './pages/telaPartidas';
-const anoIni = '2013';
+const anoIni = '2003';
 function App() {
   return (
     <HashRouter>
