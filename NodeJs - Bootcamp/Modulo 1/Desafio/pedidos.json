@@ -1,5 +1,5 @@
 {
-  "nextId": 510,
+  "nextId": 502,
   "pedidos": [
     {
       "id": 1,
@@ -2524,14 +2524,6 @@
       "timestamp": "2021-05-02T19:48:09.766Z"
     },
     {
-      "id": 317,
-      "cliente": "Gedeão Saloio",
-      "produto": "Pizza Atum",
-      "valor": 32,
-      "entregue": true,
-      "timestamp": "2021-05-02T19:48:09.766Z"
-    },
-    {
       "id": 318,
       "cliente": "Bento Torcato",
       "produto": "Pizza Muçarela",
@@ -3996,54 +3988,11 @@
     },
     {
       "id": 502,
-      "cliente": "mlq lixxo",
-      "produto": "Pizza Muçarela",
-      "valor": 26,
-      "entregue": false,
-      "timestamp": "2021-08-17T01:41:08.238Z"
-    },
-    {
-      "id": 503,
-      "cliente": "el juan",
-      "produto": "lazanha",
-      "valor": 10,
-      "entregue": false,
-      "timestamp": "2021-08-17T01:44:51.346Z"
-    },
-    {
-      "id": 504,
-      "entregue": false,
-      "timestamp": "2021-08-17T02:11:55.909Z"
-    },
-    {
-      "id": 505,
-      "entregue": false,
-      "timestamp": "2021-08-17T02:12:00.074Z"
-    },
-    {
-      "id": 506,
-      "entregue": false,
-      "timestamp": "2021-08-17T02:12:23.981Z"
-    },
-    {
-      "id": 507,
-      "entregue": false,
-      "timestamp": "2021-08-17T02:12:54.905Z"
-    },
-    {
-      "id": 508,
-      "entregue": false,
-      "timestamp": "2021-08-17T02:12:59.351Z"
-    },
-    {
-      "id": 509,
-      "entregue": false,
-      "timestamp": "2021-08-17T02:15:43.225Z"
-    },
-    {
-      "id": 510,
-      "entregue": false,
-      "timestamp": "2021-08-17T02:16:23.964Z"
+      "cliente": "Rosaura Azenha",
+      "produto": "Pizza Pepperoni",
+      "valor": 32.5,
+      "entregue": true,
+      "timestamp": "2021-08-18T03:14:39.885Z"
     }
   ]
 }
