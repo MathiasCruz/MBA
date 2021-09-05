@@ -1,0 +1,8 @@
+2021-09-05T18:25:42.484Z [store-api] error POST  - Name, cpf, phone, email, address são obrigatórios
+2021-09-05T21:31:51.856Z [store-api] error POST  - Name, cpf, phone, email, address são obrigatórios
+2021-09-05T21:33:13.800Z [store-api] error POST  - Unexpected token ' in JSON at position 1
+2021-09-05T21:34:39.153Z [store-api] error POST  - Name, cpf, phone, email, address são obrigatórios
+2021-09-05T21:34:53.897Z [store-api] error POST  - Name, cpf, phone, email, address são obrigatórios
+2021-09-05T21:35:17.346Z [store-api] error POST  - values is not defined
+2021-09-05T21:35:56.476Z [store-api] error POST  - Cannot read property '0' of undefined
+2021-09-05T21:36:18.320Z [store-api] info Post/client - {"name":"Julio","cpf":"123456789","phone":"169926574","email":"baodeJogo@email.com","address":"PQP"}
