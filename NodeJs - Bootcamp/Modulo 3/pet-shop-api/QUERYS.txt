@@ -1,0 +1,26 @@
+CREATE TABLE proprietario(
+ proprietario_id SERIAL,
+ nome VARCHAR NOT NULL,
+ telefone VARCHAR NOT NULL,
+ PRIMARY KEY (proprietario_id)
+)
+
+
+CREATE TABLE animal(
+ animal_id serial,
+ proprietario_id INT,
+ nome VARCHAR NOT NULL,
+ tipo VARCHAR NOT NULL,
+  PRIMARY KEY (animal_id),
+  CONSTRAINT fk_proprietario FOREIGN KEY(proprietario_id) REFERENCES proprietario(proprietario_id)
+)
+
+
+ const conn = await connect();
+  try { } catch (err) {
+    throw err;
+  } finally {
+    conn.release();
+  }
+
+
