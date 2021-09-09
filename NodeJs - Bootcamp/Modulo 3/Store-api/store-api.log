@@ -43,3 +43,7 @@
     |     property '_writableState' -> object with constructor 'WritableState'
     |     property 'afterWriteTickInfo' -> object with constructor 'Object'
     --- property 'stream' closes the circle
+2021-09-08T23:23:29.646Z [store-api] error POST  - Name, cnpj, phone, email, address são obrigatórios
+2021-09-08T23:25:31.818Z [store-api] info Post/supplier - {"name":"Jamil","cnpj":"12345675","phone":"1234545","email":"mathias@teste.com","address":"PQ"}
+2021-09-08T23:28:52.636Z [store-api] error POST  - null value in column "name" violates not-null constraint
+2021-09-08T23:30:37.494Z [store-api] info Post/product - {"nome":"Controle ps4","description":"Controle top","value":100,"stock":2,"supplier_id":1}

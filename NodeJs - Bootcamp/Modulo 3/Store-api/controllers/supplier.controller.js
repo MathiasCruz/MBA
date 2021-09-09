@@ -1,4 +1,4 @@
-import supplierService from '../services/supplier.service.js';
+import supplierService from '../services/supplier.services.js';
 async function createSupplier(req, res, next) {
   try {
     let supplier = req.body;
@@ -30,7 +30,7 @@ async function getSuppliers(req, res, next) {
 async function getSupplier(req, res, next) {
   try {
     res.send(await supplierService.getSupplier(req.params.id));
-    global.logger(`GET/ CLIENT `);
+    global.logger(`GET/ Supplier `);
   } catch (err) {
     next(err);
   }
