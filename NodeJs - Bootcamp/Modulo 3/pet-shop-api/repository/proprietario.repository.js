@@ -13,7 +13,7 @@ async function updateProprietario(proprietario) {
     await Properietario.update(proprietario, {
       where: { proprietarioId: proprietario.proprietarioId },
     });
-    return await getAnimal(proprietario.proprietarioId);
+    return await getProprietario(proprietario.proprietarioId);
   } catch (err) {
     throw err;
   }
