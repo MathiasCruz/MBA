@@ -67,10 +67,66 @@ async function updateProduct(req, res, next) {
   }
 }
 
+async function createProductInfo(req, res, next) {
+  try {
+    let productInfo = req.body;
+    if (!productInfo.productId) {
+      throw new Error('Product ID é obrigatório');
+    }
+    await productService.saveProductInfo(productInfo);
+    res.end();
+    global.logger.info(`POST/product/info - ${JSON.stringify(productInfo)}`);
+  } catch (err) {
+    next(err);
+  }
+}
+
+async function getProductInfo(req, res, next) {
+  try {
+    res.send(await productService.getProductInfo(parseInt(req.params.id)));
+    global.logger.info(`GET/product/info `);
+  } catch (err) {
+    next(err);
+  }
+}
+
+async function updateProductInfo(req, res, next) {
+  try {
+    let productInfo = req.body;
+    if (!productInfo.productId) {
+      throw new Error('Product ID é obrigatório');
+    }
+    res.send(await productService.updateProductInfo(parseInt(productInfo)));
+    global.logger.info(`PUT /product/info `);
+  } catch (err) {
+    next(err);
+  }
+}
+
+async function createReview(req, res, next) {
+  try {
+    let productInfo = req.body;
+    if (!productInfo.review || !productInfo.productId) {
+      throw new Error('Product ID e review sao obrigatórios');
+    }
+    await productService.createReview(
+      productInfo.review,
+      parseInt(productInfo.productId)
+    );
+    res.end();
+    global.logger.info(`POST /product/Review `);
+  } catch (err) {
+    next(err);
+  }
+}
 export default {
   createProduct,
   getProducts,
   getProduct,
   deleteProduct,
   updateProduct,
+  createProductInfo,
+  getProductInfo,
+  updateProductInfo,
+  createReview,
 };

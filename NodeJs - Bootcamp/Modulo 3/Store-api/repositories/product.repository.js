@@ -1,4 +1,4 @@
-import { connect } from './db.js';
+import connect from './db.js';
 
 async function insertProduct(product) {
   const conn = await connect();
@@ -79,6 +79,7 @@ async function updateProduct(product) {
     conn.release();
   }
 }
+
 export default {
   insertProduct,
   getProducts,

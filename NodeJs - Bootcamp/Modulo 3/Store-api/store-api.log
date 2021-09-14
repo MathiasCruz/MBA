@@ -47,3 +47,10 @@
 2021-09-08T23:25:31.818Z [store-api] info Post/supplier - {"name":"Jamil","cnpj":"12345675","phone":"1234545","email":"mathias@teste.com","address":"PQ"}
 2021-09-08T23:28:52.636Z [store-api] error POST  - null value in column "name" violates not-null constraint
 2021-09-08T23:30:37.494Z [store-api] info Post/product - {"nome":"Controle ps4","description":"Controle top","value":100,"stock":2,"supplier_id":1}
+2021-09-13T23:22:09.266Z [store-api] error POST  - Product ID é obrigatório
+2021-09-13T23:22:19.551Z [store-api] error POST  - bad auth : Authentication failed.
+2021-09-13T23:23:45.477Z [store-api] error POST  - connect ETIMEDOUT 34.237.126.156:27017
+2021-09-13T23:24:01.090Z [store-api] error POST  - bad auth : Authentication failed.
+2021-09-13T23:24:06.899Z [store-api] error POST  - bad auth : Authentication failed.
+2021-09-13T23:24:23.664Z [store-api] error POST  - bad auth : Authentication failed.
+2021-09-13T23:27:05.148Z [store-api] info POST/product/info - {"productId":32,"category":"Mouse","width":"15cm","height":"20cm","depth":"5cm","reviews":[],"_id":"613fde489b5df24d795b8b7b"}
