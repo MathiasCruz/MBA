@@ -1,4 +1,4 @@
-CREATE TABLE proprietario(
+CREATE TABLE proprietarios(
  proprietario_id SERIAL,
  nome VARCHAR NOT NULL,
  telefone VARCHAR NOT NULL,
@@ -6,7 +6,7 @@ CREATE TABLE proprietario(
 )
 
 
-CREATE TABLE animal(
+CREATE TABLE animais(
  animal_id serial,
  proprietario_id INT,
  nome VARCHAR NOT NULL,
@@ -14,7 +14,15 @@ CREATE TABLE animal(
   PRIMARY KEY (animal_id),
   CONSTRAINT fk_proprietario FOREIGN KEY(proprietario_id) REFERENCES proprietario(proprietario_id)
 )
+CREATE TABLE servicos(
+ servico_id serial,
+ animal_id INT,
+ descricao VARCHAR NOT NULL,
+ valor NUMERIC NOT NULL,
+ PRIMARY JEY (servico_id),
+ CONSTRAINT fk_animal FOREIGN KEY(animal_id ) REFERENCES animais(animal_id)
 
+)
 
  const conn = await connect();
   try { } catch (err) {

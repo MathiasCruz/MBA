@@ -46,7 +46,7 @@ async function getAnimal(id) {
 }
 async function getAllAnimalsByOwner(id) {
   try {
-    return await Animal.findAll({ where: { proprietarioId: id } });
+    return await Animal.findAll({ where: { proprietarioId: id }, raw: true });
   } catch (err) {
     throw err;
   }

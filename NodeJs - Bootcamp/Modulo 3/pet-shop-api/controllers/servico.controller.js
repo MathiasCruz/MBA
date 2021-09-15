@@ -11,5 +11,18 @@ async function createService(req, res, next) {
     next(err);
   }
 }
+async function getServices(req, res, next) {
+  try {
+    if (req.query.proprietario_id) {
+      res.send(
+        await ServicoService.getServiceByOwner(req.query.proprietario_id)
+      );
+    } else {
+      res.send(await ServicoService.getAllServices());
+    }
+  } catch (err) {
+    next(err);
+  }
+}
 
-export default { createService };
+export default { createService, getServices };

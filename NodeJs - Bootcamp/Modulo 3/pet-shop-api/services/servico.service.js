@@ -4,49 +4,23 @@ async function createServico(servico) {
   return await ServicoRepository.createServico(servico);
 }
 
-async function updateServico(servico) {
+async function getAllServices() {
   try {
-    await ServicoRepository.update(servico, {
-      where: { servicoId: servico.servicoId },
-    });
-    return await getServico(servico.servicoId);
+    return await ServicoRepository.getAllServices();
   } catch (err) {
     throw err;
   }
 }
 
-async function deleteServico(id) {
+async function getServiceByOwner(id) {
   try {
-    await ServicoRepository.destroy({
-      where: {
-        servicoId: id,
-      },
-    });
+    return await ServicoRepository.getServiceByOwner(id);
   } catch (err) {
     throw err;
   }
 }
-
-async function getAllServico() {
-  try {
-    return await ServicoRepository.findAll();
-  } catch (err) {
-    throw err;
-  }
-}
-
-async function getServico(id) {
-  try {
-    return await ServicoRepository.findByPk(id);
-  } catch (err) {
-    throw err;
-  }
-}
-
 export default {
-  getServico,
-  getAllServico,
-  deleteServico,
-  updateServico,
+  getAllServices,
   createServico,
+  getServiceByOwner,
 };
