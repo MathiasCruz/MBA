@@ -19,7 +19,7 @@ CREATE TABLE servicos(
  animal_id INT,
  descricao VARCHAR NOT NULL,
  valor NUMERIC NOT NULL,
- PRIMARY JEY (servico_id),
+ PRIMARY KEY (servico_id),
  CONSTRAINT fk_animal FOREIGN KEY(animal_id ) REFERENCES animais(animal_id)
 
 )
