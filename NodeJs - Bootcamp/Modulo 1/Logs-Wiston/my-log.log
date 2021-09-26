@@ -1,7 +1,0 @@
-2021-08-08T00:31:37.127Z [my-app] error:error log
-2021-08-08T00:31:37.130Z [my-app] warn:warn log
-2021-08-08T00:31:37.131Z [my-app] info:info log
-2021-08-08T00:31:37.131Z [my-app] verbose:verbose log
-2021-08-08T00:31:37.132Z [my-app] debug:debug log
-2021-08-08T00:31:37.132Z [my-app] silly:silly log
-2021-08-08T00:31:37.133Z [my-app] info:logger with parameter

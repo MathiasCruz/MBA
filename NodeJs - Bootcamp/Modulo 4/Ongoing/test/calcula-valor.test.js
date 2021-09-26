@@ -59,7 +59,7 @@ test('Valor da soma das prestacoes deve ser igual ao montante com duas casas dec
   }
 })
 
-test('Desafio semi final',()=>{
+test('Desafio semi final', () => {
   const numeroPrestacoes = 3
   const montante = 101.994
 
@@ -72,6 +72,4 @@ test('Desafio semi final',()=>{
     const j = i + 1
     expect(prestacoes[i]).toBeGreaterThanOrEqual(prestacoes[j])
   }
-})
-
 })

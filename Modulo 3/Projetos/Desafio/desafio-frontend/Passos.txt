@@ -1,3 +1,0 @@
-Definir as rotasnpm
-Construir o login 
-
