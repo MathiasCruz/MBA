@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eventos de Mouse</title>
+  <style>
+    .selected{
+      background: green;
+    }
+
+  </style>
+</head>
+<body>
+  <ul id="ul">
+    <li>Gears 5</li>
+    <li>Horizon</li>
+    <li>Call of Duty</li>
+  </ul>
+</body>
+</html>
+
+<script>
+  let ul = document.getElementById("ul");
+  ul.addEventListener("click",selectItem);
+
+  function selectItem(event)
+  {
+    if(event.target.tagName !='LI') return;
+
+    if(event.ctrlKey || event.metaKey)
+    {
+      ToogleSelect(event.target);
+    }
+    else{
+      singleSelect(event.target);
+    }
+  }
+
+  function ToogleSelect(li)
+  {
+    li.classList.add('selected');
+  }
+
+  function singleSelect(li)
+  {
+    let seleted = ul.querySelectorAll('.selected')
+    for(let item of seleted){
+      item.classList.remove('selected');
+    }
+    li.classList.add('selected')
+  }
+</script>

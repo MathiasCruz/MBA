@@ -1,0 +1,56 @@
+2021-09-05T18:25:42.484Z [store-api] error POST  - Name, cpf, phone, email, address são obrigatórios
+2021-09-05T21:31:51.856Z [store-api] error POST  - Name, cpf, phone, email, address são obrigatórios
+2021-09-05T21:33:13.800Z [store-api] error POST  - Unexpected token ' in JSON at position 1
+2021-09-05T21:34:39.153Z [store-api] error POST  - Name, cpf, phone, email, address são obrigatórios
+2021-09-05T21:34:53.897Z [store-api] error POST  - Name, cpf, phone, email, address são obrigatórios
+2021-09-05T21:35:17.346Z [store-api] error POST  - values is not defined
+2021-09-05T21:35:56.476Z [store-api] error POST  - Cannot read property '0' of undefined
+2021-09-05T21:36:18.320Z [store-api] info Post/client - {"name":"Julio","cpf":"123456789","phone":"169926574","email":"baodeJogo@email.com","address":"PQP"}
+2021-09-07T17:11:30.276Z [store-api] info GET/client
+2021-09-07T18:08:42.903Z [store-api] error GET  - relation "cliente" does not exist
+2021-09-07T18:09:09.018Z [store-api] error GET  - global.logger is not a function
+2021-09-07T18:14:13.369Z [store-api] error DELETE  - conn is not defined
+2021-09-07T18:14:52.739Z [store-api] error DELETE  - global.logger is not a function
+2021-09-07T18:14:57.710Z [store-api] error GET  - global.logger is not a function
+2021-09-07T18:15:01.266Z [store-api] info GET/clients
+2021-09-07T20:57:06.070Z [store-api] error PUT  - ID,Name, cpf, phone, email, address são obrigatórios
+2021-09-07T20:57:29.715Z [store-api] error PUT  - ID,Name, cpf, phone, email, address são obrigatórios
+2021-09-07T20:57:35.819Z [store-api] error PUT  - ID,Name, cpf, phone, email, address são obrigatórios
+2021-09-07T20:58:38.161Z [store-api] error PUT  - relation "client" does not exist
+2021-09-07T20:58:56.872Z [store-api] info PUT/client - {"client_id":"1","name":"Julio","cpf":"123456789","phone":"169926574","email":"baodeJogo@email.com","address":"PQP"}
+2021-09-07T20:59:05.256Z [store-api] info PUT/client - {"client_id":"2","name":"Julio","cpf":"123456789","phone":"169926574","email":"baodeJogo@email.com","address":"PQP"}
+2021-09-07T20:59:13.862Z [store-api] info GET/clients
+2021-09-07T20:59:25.388Z [store-api] info PUT/client - {"client_id":"2","name":"Julio trouxa","cpf":"123456789","phone":"169926574","email":"baodeJogo@email.com","address":"PQP"}
+2021-09-07T20:59:29.259Z [store-api] info GET/clients
+2021-09-07T20:59:30.427Z [store-api] info GET/clients
+2021-09-07T20:59:57.742Z [store-api] info PUT/client - {"client_id":"2","name":"Julio trouxa","cpf":"123456789","phone":"169926574","email":"baodeJogo@email.com","address":"PQP"}
+2021-09-07T21:00:01.435Z [store-api] info PUT/client - {"client_id":"2","name":"Julio trouxa","cpf":"123456789","phone":"169926574","email":"baodeJogo@email.com","address":"PQP"}
+2021-09-07T21:00:05.489Z [store-api] info GET/clients
+2021-09-07T21:02:16.783Z [store-api] info GET/clients
+2021-09-07T21:02:22.638Z [store-api] error PUT  - Assignment to constant variable.
+2021-09-07T21:06:25.197Z [store-api] error PUT  - Assignment to constant variable.
+2021-09-07T21:06:26.626Z [store-api] error PUT  - Assignment to constant variable.
+2021-09-07T21:07:01.551Z [store-api] error PUT  - Assignment to constant variable.
+2021-09-07T21:07:35.941Z [store-api] error PUT  - Assignment to constant variable.
+2021-09-07T21:08:04.539Z [store-api] error PUT  - Assignment to constant variable.
+2021-09-07T21:08:33.600Z [store-api] error PUT  - Converting circular structure to JSON
+    --> starting at object with constructor 'Socket'
+    |     property '_writableState' -> object with constructor 'WritableState'
+    |     property 'afterWriteTickInfo' -> object with constructor 'Object'
+    --- property 'stream' closes the circle
+2021-09-07T21:09:14.702Z [store-api] error PUT  - Converting circular structure to JSON
+    --> starting at object with constructor 'Socket'
+    |     property '_writableState' -> object with constructor 'WritableState'
+    |     property 'afterWriteTickInfo' -> object with constructor 'Object'
+    --- property 'stream' closes the circle
+2021-09-08T23:23:29.646Z [store-api] error POST  - Name, cnpj, phone, email, address são obrigatórios
+2021-09-08T23:25:31.818Z [store-api] info Post/supplier - {"name":"Jamil","cnpj":"12345675","phone":"1234545","email":"mathias@teste.com","address":"PQ"}
+2021-09-08T23:28:52.636Z [store-api] error POST  - null value in column "name" violates not-null constraint
+2021-09-08T23:30:37.494Z [store-api] info Post/product - {"nome":"Controle ps4","description":"Controle top","value":100,"stock":2,"supplier_id":1}
+2021-09-13T23:22:09.266Z [store-api] error POST  - Product ID é obrigatório
+2021-09-13T23:22:19.551Z [store-api] error POST  - bad auth : Authentication failed.
+2021-09-13T23:23:45.477Z [store-api] error POST  - connect ETIMEDOUT 34.237.126.156:27017
+2021-09-13T23:24:01.090Z [store-api] error POST  - bad auth : Authentication failed.
+2021-09-13T23:24:06.899Z [store-api] error POST  - bad auth : Authentication failed.
+2021-09-13T23:24:23.664Z [store-api] error POST  - bad auth : Authentication failed.
+2021-09-13T23:27:05.148Z [store-api] info POST/product/info - {"productId":32,"category":"Mouse","width":"15cm","height":"20cm","depth":"5cm","reviews":[],"_id":"613fde489b5df24d795b8b7b"}

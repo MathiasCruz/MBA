@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 1.4. KeyboardEvent - Eventos do teclado </title>
+</head>
+<body>
+  <p>Aperte A e D juntos</p>
+</body>
+</html>
+<script>
+  function CheckDoubleKeys(func,...codes){
+    let pressed = new Set();
+    document.addEventListener("keydown",(event)=>{
+      pressed.add(event.code);
+      for(let code of codes){
+        if(!pressed.has(code))
+        return;
+      }
+      pressed.clear();
+      func();
+  })
+    document.addEventListener("keyup",(event)=>pressed.delete(event.code))
+
+}
+  CheckDoubleKeys(()=>alert("Atalho construido"),'KeyA','KeyD');
+</script>

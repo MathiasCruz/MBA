@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manipuladores de eventos</title>
+</head>
+<body>
+    <button type="button">Clique aqui</button>
+    <a href="#">Clique aqui</a>
+</body>
+</html>
+
+<script>
+  let btn =  document.querySelector("button");
+  btn.addEventListener("click",alerta);
+  let link = document.querySelector("a");
+  link.addEventListener("click",alertaLink)
+
+  function alertaLink(){
+    alert("Voce clicou no link");
+  }
+  function alerta()
+  {
+    alert("Voce clicou no botão");
+  }
+</script>
