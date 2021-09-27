@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 1.5. FocusEvent - Eventos de foco</title>
+  <style type="text/css">
+    .invalid{
+      border-color: red;
+    }
+    #error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <input type='text'> </input>
+  <button>clique</button>
+  <div id="error"></div>
+</body>
+</html>
+<script>
+  let input = document.querySelector('input');
+  let div = document.getElementById('error');
+  input.addEventListener('blur',FuncBlur);
+  input.addEventListener('focus',FuncFocus);
+
+  function FuncBlur(event){
+    if(!event.target.value.includes('@')){
+      event.target.classList.add('invalid');
+      div.innerHTML = 'Email inválido';
+    }
+  }
+
+  function FuncFocus(event){
+    event.target.classList.remove('invalid');
+    div.innerHTML = '';
+  }
+</script>

@@ -1,0 +1,42 @@
+*{
+  box-sizing: border-box;
+  outline: 0;
+  font-family: "Open sans", sans-serif;
+}
+body{
+  background-image: url("../img/backgound.jpg");
+  background-repeat: no-repeat;
+  text-align: center;
+  background-size: 100%;
+}
+.container {
+  display: flex;
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  border-radius: 10px;
+}
+.infoCovid {
+  background: white;
+  border-radius: 5px;
+  min-width: 250px;
+  padding: 10px;
+  margin: 30px auto;
+}
+.wrap{
+  flex-wrap: wrap;
+}
+.calendario{
+  display: block;
+  padding: 20px;
+  margin: 20px auto;
+}
+select {
+  display: block;
+  margin: 20px auto;
+  padding: 20px;
+}
+.imgUp{
+  padding-top: 20%;
+  background-image: url("../img/up.png");
+}

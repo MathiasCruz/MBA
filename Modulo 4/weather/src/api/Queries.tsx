@@ -1,0 +1,1 @@
+export const citiesQuery = () => `cities`;

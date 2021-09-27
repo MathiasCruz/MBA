@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container wrap">
+      <section class="infoCovid">
+        <h5>Total Confirmados</h5>
+        <p id="confirmados"></p>
+        <img id="imgConfirmados" src="" />
+        <h3 id="confirmadoDiario"></h3>
+      </section>
+      <section class="infoCovid">
+        <h5>Total Mortes</h5>
+        <p id="mortos"></p>
+        <img id="imgMortes" src="" />
+        <h3 id="mortesDiario"></h3>
+      </section>
+      <section class="infoCovid">
+        <h5>Total Recuperados</h5>
+        <p id="recuperados"></p>
+        <img id="imgRecuperados" src="" />
+        <h3 id="recuperadosDiario"></h3>
+      </section>
+      <section class="infoCovid">
+        <h5>Total Ativos</h5>
+        <p id="ativos"></p>
+        <img id="imgAtivos" src="" />
+        <h3 id="ativosDiario"></h3>
+      </section>
+    </div>
+    <div>
+      <select class="select" id="combo">
+        <option>Global</option>
+      </select>
+      <input class="calendario" id="diaAtual" type="date" min="2020-01-01" />
+    </div>
+    <script src="./assets/js/main.js"></script>
+    <script src="http://cdn.date-fns.org/v1.9.0/date_fns.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <p></p>
+</body>
+</html>
+<script>
+  let date = '2021-05-11T00:00:00Z';
+  let novaData = Date.parse(date);
+  let DAtaTeste = new Date().toLocaleDateString('en-ZA');
+  let pastDAte = new Date(novaData).toLocaleDateString('en-ZA');
+
+
+  console.log(date);
+  console.log(novaData);
+  console.log(DAtaTeste);
+  console.log('DAta Passada ' +pastDAte);
+</script>
+
