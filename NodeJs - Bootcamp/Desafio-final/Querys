@@ -21,3 +21,26 @@ CREATE TABLE vendas(
 		CONSTRAINT fk_cliente FOREIGN KEY(cliente_id) REFERENCES clientes(cliente_id),
 		CONSTRAINT FK_livro FOREIGN KEY(livro_id) REFERENCES autores(autor_id)
 	)
+	
+	
+	
+CREATE TABLE IF NOT EXISTS public.autores
+(
+    autor_id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    nome text COLLATE pg_catalog."default" NOT NULL,
+    email text COLLATE pg_catalog."default" NOT NULL,
+    telefone text COLLATE pg_catalog."default",
+    CONSTRAINT autores_pkey PRIMARY KEY (autor_id)
+)
+
+
+CREATE TABLE IF NOT EXISTS public.clientes
+(
+    cliente_id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    nome text COLLATE pg_catalog."default" NOT NULL,
+    email text COLLATE pg_catalog."default" NOT NULL,
+    senha text COLLATE pg_catalog."default" NOT NULL,
+    telefone text COLLATE pg_catalog."default" NOT NULL,
+    endereco text COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT clientes_pkey PRIMARY KEY (cliente_id)
+)

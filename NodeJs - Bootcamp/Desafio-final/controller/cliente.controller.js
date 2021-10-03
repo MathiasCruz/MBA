@@ -19,12 +19,22 @@ async function CriaCliente(req, res, next) {
     next(err);
   }
 }
-
+async function BuscarCliente(req, res, next) {
+  try {
+    const id = req.params.id;
+    if (!id) {
+      throw new Error("Id é obrigatóriio");
+    }
+    res.send(await clienteService.BuscarCliente(id));
+  } catch (err) {
+    next(err);
+  }
+}
 async function AtualizarCliente(req, res, next) {
   try {
     const cliente = req.body;
     if (
-      !cliente.id ||  
+      !cliente.id ||
       !cliente.nome ||
       !cliente.email ||
       !cliente.senha ||
@@ -40,7 +50,20 @@ async function AtualizarCliente(req, res, next) {
     next(err);
   }
 }
+async function DeletarCliente(req, res, next) {
+  try {
+    const id = req.params.id;
+    if (!id) {
+      throw new Error("Id é obrigatóriio");
+    }
+    res.send(await clienteService.DeletarCliente(id));
+  } catch (err) {
+    next(err);
+  }
+}
 module.exports = {
   CriaCliente,
-  AtualizarCliente
+  AtualizarCliente,
+  BuscarCliente,
+  DeletarCliente,
 };
