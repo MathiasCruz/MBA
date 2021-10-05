@@ -93,6 +93,10 @@ const livrosModel = (db, Sequelize) => {
   return Livros;
 };
 
+const clientes = ClienteModel(sequelize, Sequelize.DataTypes);
+const livros = livrosModel(sequelize, Sequelize.DataTypes);
+const autores = AutoresModel(sequelize, Sequelize.DataTypes);
+
 const VendasModel = (db, Sequelize) => {
   const Vendas = db.define(
     "vendas",
@@ -110,21 +114,21 @@ const VendasModel = (db, Sequelize) => {
       data: {
         type: Sequelize.DATEONLY,
       },
+      cliente_cliente_id: {
+        type: Sequelize.INTEGER,
+      },
+      livro_livro_id: {
+        type: Sequelize.INTEGER,
+      },
     },
     { underscored: true, timestamps: false }
   );
   return Vendas;
 };
-
-const clientes = ClienteModel(sequelize, Sequelize.DataTypes);
-const livros = livrosModel(sequelize, Sequelize.DataTypes);
-const autores = AutoresModel(sequelize, Sequelize.DataTypes);
 const vendas = VendasModel(sequelize, Sequelize.DataTypes);
 
 livros.belongsTo(autores, { foreignKey: "autor_id" });
-clientes.hasMany(vendas);
-vendas.belongsTo(clientes);
-livros.hasMany(vendas);
-vendas.belongsTo(livros);
+livros.belongsToMany(clientes, { through: vendas });
+clientes.belongsToMany(livros, { through: vendas });
 
 module.exports = { vendas, clientes, livros, vendas, autores };
