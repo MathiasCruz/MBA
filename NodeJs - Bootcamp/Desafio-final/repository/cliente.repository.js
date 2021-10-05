@@ -1,8 +1,8 @@
-const Cliente = require("../model/cliente.model.js");
+const db = require("../model/livraria.models.js");
 
 async function criarCliente(cliente) {
   try {
-    return await Cliente.create(cliente);
+    return await db.clientes.create(cliente);
   } catch (err) {
     throw err;
   }
@@ -10,7 +10,7 @@ async function criarCliente(cliente) {
 
 async function atualizarCliente(cliente) {
   try {
-    await Cliente.update(cliente, { where: { clienteId: cliente.id } });
+    await db.clientes.update(cliente, { where: { clienteId: cliente.id } });
     return await buscarCliente(cliente.id);
   } catch (err) {
     throw err;
@@ -19,7 +19,7 @@ async function atualizarCliente(cliente) {
 
 async function buscarCliente(id) {
   try {
-    return await Cliente.findByPk(id);
+    return await db.clientes.findByPk(id);
   } catch (err) {
     throw err;
   }
@@ -27,7 +27,7 @@ async function buscarCliente(id) {
 
 async function deletarCliente(id) {
   try {
-    await Cliente.destroy({ where: { clienteId: id } });
+    await db.clientes.destroy({ where: { clienteId: id } });
   } catch (err) {
     throw err;
   }

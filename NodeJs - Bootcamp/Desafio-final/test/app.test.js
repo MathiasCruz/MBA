@@ -27,8 +27,39 @@ describe("Testes de Integração", () => {
     };
     const res = await request(app).put("/cliente").send(clienteJsonAtualizacao);
     expect(res.status).toBe(200);
-    expect(res.body).toMatchObject(clienteJsonAtualizacao)
+    expect(res.body).toMatchObject(clienteJsonAtualizacao);
   });
+  test("03 - Post de Autor", async () => {
+    const autorPayload = {
+      nome: "Hp lovecraft",
+      email: "livrariaTop@gmail.com",
+      telefone: "12331155",
+    };
+    const res = await request(app).post("/autor").send(autorPayload);
+    expect(res.status).toBe(200);
+  });
+  test("04 - post de livro", async () => {
+    const livroPayload = {
+      nome: "Chamado de chucthcullu",
+      valor: 10.05,
+      estoque: 25,
+      autor_id: 1,
+    };
+    const res = await request(app).post("/livro").send(livroPayload);
+    expect(res.status).toBe(200);
+  });
+
+  test("05 - post de vendas", async () => {
+    const vendaPayload = {
+      valor: 10.05,
+      data: "20211010",
+      livro_livro_id: 1,
+      cliente_cliente_id: 1,
+    };
+    const res = await request(app).post("/venda").send(vendaPayload);
+    expect(res.status).toBe(200);
+  });
+
   // test("03 - Deletar Cliente",async () => {
   //   const res = await request(app).delete()
   // })
