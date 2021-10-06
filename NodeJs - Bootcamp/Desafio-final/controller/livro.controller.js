@@ -17,7 +17,7 @@ async function CriaLivro(req, res, next) {
 }
 async function BuscarLivro(req, res, next) {
   try {
-    if (auth.autenticar(req) || auth.autorizar(req)) {
+    if (auth.autenticar(req) || await auth.autorizar(req)) {
       const id = req.params.id;
       if (!id) {
         throw new Error("Id é obrigatóriio");
@@ -32,7 +32,7 @@ async function BuscarLivro(req, res, next) {
 }
 async function BuscarTodosLivros(req, res, next) {
   try {
-    if (auth.autenticar(req) || auth.autorizar(req)) {
+    if (auth.autenticar(req) || await auth.autorizar(req)) {
       if (req.query.autorId) {
         return res.send(
           await livroService.BuscarLivroPorAutor(req.query.autorId)

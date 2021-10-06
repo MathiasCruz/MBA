@@ -1,8 +1,9 @@
 const vendaService = require("../service/venda.service.js");
+const clienteService = require("../service/cliente.service.js");
 const auth = require("./autorizacao.controller.js");
 async function CriaVenda(req, res, next) {
   try {
-    if (auth.autenticar(req) || auth.autorizar(req)) {
+    if (auth.autenticar(req) || await auth.autorizar(req)) {
       const venda = req.body;
       if (
         !venda.valor ||
@@ -65,7 +66,13 @@ async function buscarTodasVendas(req, res, next) {
     const id = req.query.clienteId;
     const idLivro = req.query.livroId;
     if (id) {
-      return res.send(await vendaService.buscarVendaByCliente(id));
+      if (await auth.autorizar(req)) {
+        return res.send(await vendaService.buscarVendaByCliente(id));
+      } else {
+        throw new Error(
+          "Cliente não autorizado a ver compras de outros usuarios"
+        );
+      }
     } else if (idLivro) {
       return res.send(await vendaService.buscarVendaByLivro(idLivro));
     }

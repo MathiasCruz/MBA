@@ -42,8 +42,8 @@ async function buscarTodosClientes() {
 }
 async function BuscarClienteExistente(login, password) {
   try {
-    return await db.clientes.findAll({
-      where: { nome: login, senha: password },
+    return await db.clientes.findOne({
+      where: { email: login, senha: password },
       raw: true,
     });
   } catch (err) {
