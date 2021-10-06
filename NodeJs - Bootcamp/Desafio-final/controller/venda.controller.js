@@ -59,9 +59,25 @@ async function DeletarVenda(req, res, next) {
     next(err);
   }
 }
+
+async function buscarTodasVendas(req, res, next) {
+  try {
+    const id = req.query.clienteId;
+    const idLivro = req.query.livroId;
+    if (id) {
+      return res.send(await vendaService.buscarVendaByCliente(id));
+    } else if (idLivro) {
+      return res.send(await vendaService.buscarVendaByLivro(idLivro));
+    }
+    res.send(await vendaService.buscarTodasVendas());
+  } catch (err) {
+    next(err);
+  }
+}
 module.exports = {
   CriaVenda,
   AtualizarVenda,
   BuscarVenda,
   DeletarVenda,
+  buscarTodasVendas,
 };

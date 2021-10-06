@@ -74,9 +74,22 @@ async function DeletarCliente(req, res, next) {
     next(err);
   }
 }
+
+async function buscarTodosClientes(req, res, next) {
+  try {
+    if (auth.autenticar(req)) {
+      res.send(await clienteService.buscarTodosClientes());
+    } else {
+      throw new Error("Deletar cliente - Não autorizado");
+    }
+  } catch (err) {
+    next(err);
+  }
+}
 module.exports = {
   CriaCliente,
   AtualizarCliente,
   BuscarCliente,
   DeletarCliente,
+  buscarTodosClientes,
 };

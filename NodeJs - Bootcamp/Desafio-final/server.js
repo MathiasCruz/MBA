@@ -3,7 +3,7 @@ const db = require("./repository/db.js");
 const mongodb = require("./repository/mongodb.js");
 app.listen(3000, () => console.log("Api iniciada na porta 3000"));
 
-db.sync({ force: true }).then(async () => {
+db.sync().then(async () => {
   await console.log("Conectado ao banco de dados!");
 });
 

@@ -101,11 +101,12 @@ const VendasModel = (db, Sequelize) => {
   const Vendas = db.define(
     "vendas",
     {
-      vendaId: {
+      id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true,
+        unique: true,
       },
       valor: {
         type: Sequelize.DOUBLE,
@@ -116,9 +117,11 @@ const VendasModel = (db, Sequelize) => {
       },
       cliente_cliente_id: {
         type: Sequelize.INTEGER,
+        unique: false,
       },
       livro_livro_id: {
         type: Sequelize.INTEGER,
+        unique: false,
       },
     },
     { underscored: true, timestamps: false }
@@ -128,7 +131,9 @@ const VendasModel = (db, Sequelize) => {
 const vendas = VendasModel(sequelize, Sequelize.DataTypes);
 
 livros.belongsTo(autores, { foreignKey: "autor_id" });
-livros.belongsToMany(clientes, { through: vendas });
-clientes.belongsToMany(livros, { through: vendas });
+livros.hasMany(vendas);
+vendas.belongsTo(livros);
+clientes.hasMany(vendas);
+vendas.belongsTo(clientes);
 
 module.exports = { vendas, clientes, livros, vendas, autores };

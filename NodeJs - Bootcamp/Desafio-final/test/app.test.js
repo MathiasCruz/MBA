@@ -28,7 +28,10 @@ describe("Testes de Integração", () => {
       telefone: "12331155",
       endereco: "Brasilia",
     };
-    const res = await request(app).put("/cliente").send(clienteJsonAtualizacao);
+    const res = await request(app)
+      .put("/cliente")
+      .set("Authorization", "Basic YWRtaW46ZGVzYWZpby1pZ3RpLW5vZGVqcw==")
+      .send(clienteJsonAtualizacao);
     expect(res.status).toBe(200);
     expect(res.body).toMatchObject(clienteJsonAtualizacao);
   });
@@ -38,7 +41,10 @@ describe("Testes de Integração", () => {
       email: "livrariaTop@gmail.com",
       telefone: "12331155",
     };
-    const res = await request(app).post("/autor").send(autorPayload);
+    const res = await request(app)
+      .post("/autor")
+      .set("Authorization", "Basic YWRtaW46ZGVzYWZpby1pZ3RpLW5vZGVqcw==")
+      .send(autorPayload);
     expect(res.status).toBe(200);
   });
   test("04 - post de livro", async () => {
@@ -48,7 +54,10 @@ describe("Testes de Integração", () => {
       estoque: 25,
       autor_id: 1,
     };
-    const res = await request(app).post("/livro").send(livroPayload);
+    const res = await request(app)
+      .post("/livro")
+      .set("Authorization", "Basic YWRtaW46ZGVzYWZpby1pZ3RpLW5vZGVqcw==")
+      .send(livroPayload);
     expect(res.status).toBe(200);
   });
 
@@ -59,7 +68,10 @@ describe("Testes de Integração", () => {
       livro_livro_id: 1,
       cliente_cliente_id: 1,
     };
-    const res = await request(app).post("/venda").send(vendaPayload);
+    const res = await request(app)
+      .post("/venda")
+      .set("Authorization", "Basic YWRtaW46ZGVzYWZpby1pZ3RpLW5vZGVqcw==")
+      .send(vendaPayload);
     expect(res.status).toBe(200);
   });
 

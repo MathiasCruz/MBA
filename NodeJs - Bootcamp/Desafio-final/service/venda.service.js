@@ -15,9 +15,22 @@ async function BuscarVenda(id) {
 async function DeletarVenda(id) {
   return await vendaRepo.deletarVenda(id);
 }
+async function buscarTodasVendas() {
+  return await vendaRepo.buscarTodasVendas();
+}
+async function buscarVendaByCliente(id) {
+  return await vendaRepo.buscarVendaByCliente(id);
+}
+
+async function buscarVendaByLivro(id) {
+  return await vendaRepo.buscarVendaByLivro(id);
+}
 module.exports = {
   CriarVenda,
   AtualizarVenda,
   BuscarVenda,
   DeletarVenda,
+  buscarTodasVendas,
+  buscarVendaByCliente,
+  buscarVendaByLivro,
 };

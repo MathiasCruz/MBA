@@ -10,8 +10,8 @@ async function criarLivro(livro) {
 
 async function atualizarLivro(livro) {
   try {
-    await db.livros.update(livro, { where: { livroId: livro.id } });
-    return await buscarLivro(livro.id);
+    await db.livros.update(livro, { where: { livroId: livro.livroId } });
+    return await buscarLivro(livro.livroId  );
   } catch (err) {
     throw err;
   }
@@ -19,7 +19,7 @@ async function atualizarLivro(livro) {
 
 async function buscarLivro(id) {
   try {
-    return await db.livros.findByPk(id);
+    return await db.livros.findByPk(id, { raw: true });
   } catch (err) {
     throw err;
   }
