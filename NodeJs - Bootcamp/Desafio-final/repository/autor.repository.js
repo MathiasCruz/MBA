@@ -17,6 +17,14 @@ async function atualizarAutor(autor) {
   }
 }
 
+async function buscarTodos() {
+  try {
+    await db.autores.findaAll();
+    return await buscarAutor(autor.id);
+  } catch (err) {
+    throw err;
+  }
+}
 async function buscarAutor(id) {
   try {
     return await db.autores.findByPk(id);
@@ -38,4 +46,5 @@ module.exports = {
   atualizarAutor,
   buscarAutor,
   deletarAutor,
+  buscarTodos
 };

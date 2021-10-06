@@ -33,9 +33,20 @@ async function deletarCliente(id) {
   }
 }
 
+async function BuscarClienteExistente(login, password) {
+  try {
+    return await db.clientes.findAll({
+      where: { nome: login, senha: password },
+      raw: true,
+    });
+  } catch (err) {
+    throw err;
+  }
+}
 module.exports = {
   criarCliente,
   atualizarCliente,
   buscarCliente,
   deletarCliente,
+  BuscarClienteExistente,
 };

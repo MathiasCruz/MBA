@@ -1,7 +1,13 @@
 const express = require("express");
 const livroController = require("../controller/livro.controller.js");
-
+const infoController = require("../controller/info.livro.controller.js");
 const router = express.Router();
+router.post("/info/:id/avaliacao", infoController.criarAvaliacao);
+router.delete("/info/:id/avaliacao/:indice", infoController.deletarAvaliacao);
+router.post("/info", infoController.criarInfo);
+router.put("/info", infoController.atualizarInfo);
+router.delete("/info/:id", infoController.deletarInfo);
+router.get("/", livroController.BuscarTodosLivros);
 router.get("/:id", livroController.BuscarLivro);
 router.post("/", livroController.CriaLivro);
 router.put("/", livroController.AtualizarLivro);

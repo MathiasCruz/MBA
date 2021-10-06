@@ -2,6 +2,7 @@ const express = require("express");
 const autorController = require("../controller/autor.controller.js");
 
 const router = express.Router();
+router.get("/", autorController.BuscarTodos);
 router.get("/:id", autorController.BuscarAutor);
 router.post("/", autorController.CriaAutor);
 router.put("/", autorController.AtualizarAutor);

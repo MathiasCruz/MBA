@@ -22,6 +22,14 @@ async function BuscarAutor(req, res, next) {
     next(err);
   }
 }
+
+async function BuscarTodos(req, res, next) {
+  try {
+    res.send(await autorService.BucarTodos());
+  } catch (err) {
+    next(err);
+  }
+}
 async function AtualizarAutor(req, res, next) {
   try {
     const autor = req.body;
@@ -49,4 +57,5 @@ module.exports = {
   AtualizarAutor,
   BuscarAutor,
   DeletarAutor,
+  BuscarTodos
 };

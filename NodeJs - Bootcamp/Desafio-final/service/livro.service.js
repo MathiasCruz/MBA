@@ -11,7 +11,12 @@ async function AtualizarLivro(livro) {
 async function BuscarLivro(id) {
   return await livroRepo.buscarLivro(id);
 }
-
+async function BuscarTodosLivros() {
+  return await livroRepo.buscarTodosLivros();
+}
+async function BuscarLivroPorAutor(id){
+  return await livroRepo.buscarLivroPorAutor(id)
+}
 async function DeletarLivro(id) {
   return await livroRepo.deletarLivro(id);
 }
@@ -20,4 +25,6 @@ module.exports = {
   AtualizarLivro,
   BuscarLivro,
   DeletarLivro,
+  BuscarTodosLivros,
+  BuscarLivroPorAutor
 };

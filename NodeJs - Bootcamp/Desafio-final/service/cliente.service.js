@@ -15,9 +15,13 @@ async function BuscarCliente(id) {
 async function DeletarCliente(id) {
   return await clienteRepo.deletarCliente(id);
 }
+async function BuscarClienteExistente(login, senha) {
+  return await clienteRepo.BuscarClienteExistente(login, senha);
+}
 module.exports = {
   CriarCliente,
   AtualizarCliente,
   BuscarCliente,
   DeletarCliente,
+  BuscarClienteExistente,
 };

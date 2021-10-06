@@ -25,6 +25,21 @@ async function buscarLivro(id) {
   }
 }
 
+async function buscarTodosLivros() {
+  try {
+    return await db.livros.findAll();
+  } catch (err) {
+    throw err;
+  }
+}
+async function buscarLivroPorAutor(id) {
+  try {
+    return await db.livros.findAll({ where: { autor_id: id } });
+  } catch (err) {
+    throw err;
+  }
+}
+
 async function deletarLivro(id) {
   try {
     await db.livros.destroy({ where: { livroId: id } });
@@ -38,4 +53,6 @@ module.exports = {
   atualizarLivro,
   buscarLivro,
   deletarLivro,
+  buscarTodosLivros,
+  buscarLivroPorAutor,
 };

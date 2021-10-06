@@ -13,12 +13,15 @@ describe("Testes de Integração", () => {
   };
 
   test("01 - Post de cliente", async () => {
-    const res = await request(app).post("/cliente").send(clienteJson);
+    const res = await request(app)
+      .post("/cliente")
+      .set("Authorization", "Basic YWRtaW46ZGVzYWZpby1pZ3RpLW5vZGVqcw==")
+      .send(clienteJson);
     expect(res.status).toBe(200);
   });
   test("02 - Atualizar Cliente", async () => {
     const clienteJsonAtualizacao = {
-      id: "2",
+      id: "1",
       nome: "Gabiru Cruz",
       email: "MAthias@gmail.com",
       senha: "123456",

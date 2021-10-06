@@ -11,7 +11,9 @@ async function AtualizarAutor(autor) {
 async function BuscarAutor(id) {
   return await autorRepo.buscarAutor(id);
 }
-
+async function BucarTodos() {
+  return await autorRepo.buscarTodos();
+}
 async function DeletarAutor(id) {
   return await autorRepo.deletarAutor(id);
 }
@@ -20,4 +22,5 @@ module.exports = {
   AtualizarAutor,
   BuscarAutor,
   DeletarAutor,
+  BucarTodos
 };
