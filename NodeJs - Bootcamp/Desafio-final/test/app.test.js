@@ -1,12 +1,13 @@
 const request = require("supertest");
 const app = require("../index.js");
 const db = require("../repository/db");
+const auth = require("../controller/autorizacao.controller.js");
 describe("Testes de Integração", () => {
   afterAll(async () => await db.close());
 
   const clienteJson = {
-    nome: "Mathias",
-    email: "MAthias@gmail.com",
+    nome: "Jamil",
+    email: "jamil@gmail.com",
     senha: "123456",
     telefone: "12331155",
     endereco: "Brasilia",
@@ -23,7 +24,7 @@ describe("Testes de Integração", () => {
     const clienteJsonAtualizacao = {
       id: "1",
       nome: "Gabiru Cruz",
-      email: "MAthias@gmail.com",
+      email: "Jamil@gmail.com",
       senha: "123456",
       telefone: "12331155",
       endereco: "Brasilia",
@@ -61,16 +62,31 @@ describe("Testes de Integração", () => {
     expect(res.status).toBe(200);
   });
 
-  test("05 - post de vendas", async () => {
+  test("05 - get de livro", async () => {
+    const parameters = auth.criarBasicBase64(
+      clienteJson.email,
+      clienteJson.senha
+    );
+    console.log(parameters);
+    const res = await request(app)
+      .get("/livro/2")
+      .set("Authorization", parameters)
+      .send();
+    expect(res.status).toBe(200);
+  });
+  test("06 - post de vendas", async () => {
     const vendaPayload = {
       valor: 10.05,
       data: "20211010",
-      livro_livro_id: 1,
+      livro_livro_id: 2,
       cliente_cliente_id: 1,
     };
     const res = await request(app)
       .post("/venda")
-      .set("Authorization", "Basic YWRtaW46ZGVzYWZpby1pZ3RpLW5vZGVqcw==")
+      .set(
+        "Authorization",
+        auth.criarBasicBase64(clienteJson.email, clienteJson.senha)
+      )
       .send(vendaPayload);
     expect(res.status).toBe(200);
   });

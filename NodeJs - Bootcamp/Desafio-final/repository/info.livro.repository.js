@@ -88,4 +88,5 @@ module.exports = {
   deletarInfo,
   criarAvaliacao,
   deletarAvaliacao,
+  buscarInfo,
 };

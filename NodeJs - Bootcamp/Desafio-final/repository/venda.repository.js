@@ -1,5 +1,6 @@
 const db = require("../model/livraria.models.js");
 const livros = require("./livro.repository.js");
+
 async function criarVenda(venda) {
   try {
     const livro = await livros.buscarLivro(venda.livro_livro_id);

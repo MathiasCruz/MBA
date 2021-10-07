@@ -3,7 +3,7 @@ const clienteService = require("../service/cliente.service.js");
 const auth = require("./autorizacao.controller.js");
 async function CriaVenda(req, res, next) {
   try {
-    if (auth.autenticar(req) || await auth.autorizar(req)) {
+    if (auth.autenticar(req) || (await auth.autorizar(req))) {
       const venda = req.body;
       if (
         !venda.valor ||
@@ -51,9 +51,13 @@ async function AtualizarVenda(req, res, next) {
 }
 async function DeletarVenda(req, res, next) {
   try {
-    const id = req.params.id;
-    if (!id) {
-      throw new Error("Id é obrigatóriio");
+    if (auth.autenticar(req)) {
+      const id = req.params.id;
+      if (!id) {
+        throw new Error("Id é obrigatóriio");
+      }
+    } else {
+      throw new Error("Criar venda não autorizado");
     }
     res.send(await vendaService.DeletarVenda(id));
   } catch (err) {
@@ -66,7 +70,7 @@ async function buscarTodasVendas(req, res, next) {
     const id = req.query.clienteId;
     const idLivro = req.query.livroId;
     if (id) {
-      if (await auth.autorizar(req)) {
+      if (auth.autenticar(req) || await auth.autorizar(req)) {
         return res.send(await vendaService.buscarVendaByCliente(id));
       } else {
         throw new Error(

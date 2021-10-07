@@ -31,8 +31,8 @@ async function autorizar(req) {
 }
 
 function criarBasicBase64(usuario, senha) {
-  const autenticacao = "Basic " + usuario + ":" + senha;
-  const authBase64 = Buffer.from(autenticacao, "base64");
-  return authBase64;
+  const autenticacao = usuario + ":" + senha;
+  const authBase64 = Buffer.from(autenticacao).toString("base64");
+  return "Basic " + authBase64;
 }
 module.exports = { autenticar, autorizar, criarBasicBase64 };
