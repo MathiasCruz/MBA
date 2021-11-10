@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+*, *:after, *:before{
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	font-family: 'Roboto', sans-serif;
+}
+
+body{
+	min-height: 100vh;
+	background: #eee;
+}
+
+.flex {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+}
+
+.center {
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+}
+
+.around {
+	-ms-flex-pack: distribute;
+	justify-content: space-around;
+}
+
+.between {
+	-webkit-box-pack: justify;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+}
+
+.vcenter {
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+}
+
+.header {
+	height: 80px;
+	-webkit-transition: background .4s;
+	transition: background .4s;
+}
+
+.header.store1{
+	background: #DF3038;
+	-webkit-box-shadow: 0 1px 10px rgba(233, 48, 56, .37);
+	box-shadow: 0 1px 10px rgba(233, 48, 56, .37);
+}
+
+.header.store1 + main h3{
+	color: #DF3038;
+}
+
+.header button{
+	border: 0;
+	padding: 10px;
+	margin: 0 20px;
+	font-size: 1.2em;
+	background: transparent;
+	color: #f8f5f3;
+	cursor: pointer;
+	border-bottom: 4px solid transparent;
+}
+
+.header button.active{
+	border-bottom-color: #f8f5f3;
+}
+
+main{
+	margin: 2em 4em;
+	background: #f8f5f3;
+	height: calc(100vh - 4em - 80px);
+	border-radius: 4px;
+}
+
+.container{
+	height: 100%;
+	padding: 1em;
+}
+
+.col{
+	background: #eee;
+	height: 100%;
+	overflow-y: auto;
+	width: 350px;
+	padding: 10px;
+	border-radius: 4px;
+	border: 1px solid #ddd;
+}
+
+.col h3{
+	margin-top: 0;
+	margin-left: 5px;
+	color: #212121;
+}
+
+.col h4{
+	margin-bottom: 5px;
+	margin-left: 10px;
+	color: #212121;
+}
+
+.dragContainer{
+	height: 100%;
+}
+
+.card{
+	background: #f8f5f3;
+	padding: 12px;
+	margin-bottom: 10px;
+	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .27);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, .27);
+	border-radius: 4px;
+	color: #212121;
+	display: flex;
+}
+
+.hourContainer{
+	padding: 5px;
+	border: 1px solid #ccc;
+	background: #fff;
+	border-radius: 2px;
+	min-height: 60px;
+}
+
+.timeImg{
+	width: 20px;
+	margin-right: 15px;
+}
+
+.line {
+	width: 4px;
+	margin-right: 18px;
+	border-radius: 2px;
+}
+
+.block {
+	width: 4px;
+	height: 30px;
+	border-radius: 2px;
+}
+
+.frango {
+	background: #df3030;
+}
+
+.pernil {
+	background: #6b30df;
+}
+
+.picanha {
+	background: #30c7df;
+}
+
+.torta {
+	background: #30df66;
+}
+
+.refrigerante {
+	background: #d4df30;
+}
+
+.title {
+	display: block;
+	margin-bottom: 12px;
+}
+
+.tableContainer {
+	padding-top: 24px;
+}
+
+.table {
+	width: 60%;
+	margin-left: 20%;
+}
+
+.table td, .table th {
+	border-bottom: 1px solid #ddd;
+	text-align: center;
+	padding: 10px;
+}
+
+.icon {
+	width: 25px;
+	height: 25px;
+	padding: 5px;
+	margin: 5px;
+	cursor: pointer;
+}
