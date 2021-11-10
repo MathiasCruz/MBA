@@ -1,6 +1,6 @@
 import {retornarConexao} from './mongodb.js'
 
-async function criaProduto(produto){
+async function criarProduto(produto){
     try{
         const conexao = await retornarConexao();
         await conexao.db('Controle-Estoque').collection('Produtos').insertOne(produto)
@@ -14,4 +14,4 @@ async function criaProduto(produto){
 
 }
 
-export {criaProduto};
+export default {criarProduto};
