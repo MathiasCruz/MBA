@@ -1,7 +1,14 @@
 import repository from '../repository/produto.repository.js'
 
-async function criarProduto(produto){
-    return await repository.criarProduto();
+async function criarProduto(produto) {
+    return await repository.criarProduto(produto);
 }
 
-export default {criarProduto}
+async function atualizarProduto(produto) {
+    return await repository.atualizarProduto(produto);
+}
+
+async function buscarProdutoPorId(id){
+    return await repository.buscarProdutoPorId(id);
+}
+export default { criarProduto, atualizarProduto,buscarProdutoPorId }
