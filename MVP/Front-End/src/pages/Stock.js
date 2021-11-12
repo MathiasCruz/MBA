@@ -1,24 +1,12 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+import servico from '../service/httpService.js'
 
 function Stock() {
-  const [data] = useState([{
-    type: 'Frango',
-    quantity: '47',
-  }, {
-    type: 'Refrigerante',
-    quantity: 12,
-  }, {
-    type: 'Torta',
-    quantity: 2
-  }, {
-    type: 'Pernil',
-    quantity: 29
-  }, {
-    type: 'Picanha',
-    quantity: 31
-  }])
+  const [data] = useState(async () => {
+    return await servico.buscarTodosOsProdutos();
+  });
 
-	return <div className="tableContainer">
+  return <div className="tableContainer">
     <table className="table">
       <thead>
         <tr>
@@ -32,13 +20,13 @@ function Stock() {
         {data.map((item, index) => {
           return <tr key={index}>
             <td>
-              <div className={"block " + item.type.toLowerCase()} />
+              <div className={"block " + item.nome.toLowerCase()} />
             </td>
-            <td>{item.type}</td>
+            <td>{item.nome}</td>
             <td>
               <div className="flex vcenter center">
                 <img className="icon" src={require("../img/minus.png")} alt="" />
-                <span>{item.quantity}</span>
+                <span>{item.quantidade}</span>
                 <img className="icon" src={require("../img/add.png")} alt="" />
               </div>
             </td>

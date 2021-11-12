@@ -11,4 +11,8 @@ async function atualizarProduto(produto) {
 async function buscarProdutoPorId(id){
     return await repository.buscarProdutoPorId(id);
 }
-export default { criarProduto, atualizarProduto,buscarProdutoPorId }
+
+async function buscarTodosProdutos(){
+    return await repository.buscarTodosProdutos()
+}
+export default { criarProduto, atualizarProduto,buscarProdutoPorId,buscarTodosProdutos }

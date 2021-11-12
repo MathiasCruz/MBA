@@ -14,7 +14,6 @@ function App() {
 		<main>
 			{page === 'today' && <Today />}
 			{page === 'stock' && <Stock />}
-			{page === 'user' && <User />}
 		</main>
 	</div>
 }

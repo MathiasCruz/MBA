@@ -42,4 +42,18 @@ async function buscarProdutoPorId(id) {
     }
 }
 
-export default { criarProduto, atualizarProduto, buscarProdutoPorId };
+async function buscarTodosProdutos() {
+    const conexao = await mongo.retornarConexao();
+    try {
+        return await conexao.db('Controle-Estoque').collection('Produtos').find({}).toArray();
+    }
+    catch (ex) {
+        throw ex;
+    }
+    finally {
+        await conexao.close();
+    }
+
+}
+
+export default { criarProduto, atualizarProduto, buscarProdutoPorId, buscarTodosProdutos };

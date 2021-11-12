@@ -43,4 +43,12 @@ async function buscarProdutoPorId(req, res, next) {
     }
 }
 
-export default { criarProduto, atualizarProduto,buscarProdutoPorId }
+async function buscarTodosProdutos(req, res, next) {
+    try {
+        res.send(await service.buscarTodosProdutos())
+    } catch (err) {
+        next(err)
+    }
+}
+
+export default { criarProduto, atualizarProduto, buscarProdutoPorId,buscarTodosProdutos }
