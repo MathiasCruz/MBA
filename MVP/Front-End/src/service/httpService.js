@@ -1,14 +1,16 @@
-const url = "http://localhost:3001"
-
-function buscarTodosOsProdutos() {
-    return fetch(url + "/produto", {
-        method: "GET"
-    }).then(HandleResponse)
+import axios from "axios";
+const axiosInstance = axios.create({
+    baseURL: 'http://localhost:3001',
+    timeout: 10000,
+  });
+async function buscarTodosOsProdutos() {
+     const {data } = await axiosInstance.get('/produto').catch(message => console.log(message));
+     return data;
 }
 
-function HandleResponse(resp) {
+async function  HandleResponse(resp) {
     if (resp.ok) {
-        return resp.json();
+        return await resp.json();
     }
     throw new Error(resp.statusText);
 }

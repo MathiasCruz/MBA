@@ -9,8 +9,10 @@
   "author": "Mathias",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
-    "mongodb": "^4.1.4"
+    "mongodb": "^4.1.4",
+    "ws": "^8.2.3"
   },
   "type": "module"
 }

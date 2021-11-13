@@ -1,7 +1,9 @@
 import express from 'express'
 import produtoRouter  from "./routes/produto.route.js"
+import cors from 'cors'
 
 const app = express();
+app.use(cors())
 app.use(express.json())
 app.use("/produto", produtoRouter)
 app.get("/",async(req,res)=>{
