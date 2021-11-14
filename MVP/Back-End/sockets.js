@@ -1,3 +1,22 @@
-import WebSocket from "ws";
+import { WebSocket, WebSocketServer } from "ws";
 
-const server = new WebSocket.server({ port: 8081 });
+let sockets = [];
+function iniciarwebSocket() {
+
+    const server = new WebSocketServer({ port: 9090 });
+
+    server.on("connection", (socket) => {
+        sockets.push(socket);
+        socket.on('message', function (msg) {
+            sockets.forEach(s => s.send(msg));
+        });
+        console.log("Mensagem recebida")
+    })
+
+
+
+}
+
+
+export default { iniciarwebSocket }
+

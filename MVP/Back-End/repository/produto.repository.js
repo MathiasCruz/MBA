@@ -10,21 +10,21 @@ async function criarProduto(produto) {
         throw ex;
     }
     finally {
-        await conexao.close();
+        await mongo.fecharConexao(conexao);
     }
 }
 
 async function atualizarProduto(produto) {
     const conexao = await mongo.retornarConexao();
     try {
-        let objectId = new ObjectId(produto.id);
+        let objectId = new ObjectId(produto._id);
         await conexao.db('Controle-Estoque').collection('Produtos').updateOne({ _id: objectId }, { $set: { ...produto } });
     }
     catch (ex) {
         throw ex;
     }
     finally {
-        await conexao.close();
+        await mongo.fecharConexao(conexao);
     }
 }
 
@@ -38,7 +38,7 @@ async function buscarProdutoPorId(id) {
         throw ex;
     }
     finally {
-        await conexao.close();
+        await mongo.fecharConexao(conexao);
     }
 }
 
@@ -51,7 +51,7 @@ async function buscarTodosProdutos() {
         throw ex;
     }
     finally {
-        await conexao.close();
+        await mongo.fecharConexao(conexao);
     }
 
 }

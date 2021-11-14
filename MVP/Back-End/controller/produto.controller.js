@@ -3,9 +3,9 @@ import service from '../services/produto.service.js'
 async function criarProduto(req, res, next) {
     try {
         const produto = req.body;
-        if (!produto.nome || !produto.quantidade && !produto.peso || !produto.categoria) {
+        if (!produto.nome || !produto.quantidade && !produto.peso || !produto.categoria || !produto.valor) {
 
-            throw new Error("Nome e quantidade do produto são obrigatórios");
+            throw new Error("Nome,quantidade, peso, categoria e valor do produto são obrigatórios");
         }
 
         res.send(await service.criarProduto(produto));
@@ -18,7 +18,7 @@ async function criarProduto(req, res, next) {
 async function atualizarProduto(req, res, next) {
     try {
         const produto = req.body;
-        if (!produto.id || !produto.nome || !produto.quantidade && !produto.peso || !produto.categoria) {
+        if (!produto.id || !produto.nome || !produto.quantidade && !produto.peso || !produto.categoria || !produto.valor) {
 
             throw new Error("Nome e quantidade do produto são obrigatórios");
 
@@ -50,5 +50,6 @@ async function buscarTodosProdutos(req, res, next) {
         next(err)
     }
 }
+
 
 export default { criarProduto, atualizarProduto, buscarProdutoPorId,buscarTodosProdutos }

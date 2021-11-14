@@ -43,6 +43,13 @@ function Today() {
 
 	const onDragEnd = result => {
 		const {source, destination} = result;
+    if (result.combine) {
+      // super simple: just removing the dragging item
+      const items = [...result.source];
+      items.splice(result.source.index, 1);
+      setReserved({ items });
+      return;
+    }
 		if (!destination) return;
 
 		if(source.droppableId === destination.droppableId) reorder(destination.droppableId, source.index, destination.index);
@@ -53,7 +60,7 @@ function Today() {
     <div className="flex around container">
       <div className="col">
         <h3>Disponíveis</h3>
-        <Droppable droppableId="cooking">
+        <Droppable droppableId="cooking" isCombineEnabled>
           {(provided) => (
             <div ref={provided.innerRef} className="dragContainer">
               {cooking.map((item, index) => <Draggable key={item.id} draggableId={item.id} index={index}>
@@ -67,7 +74,7 @@ function Today() {
       </div>
       <div className="col">
         <h3>Reservado</h3>
-        <Droppable droppableId="reserved">
+        <Droppable droppableId="reserved" isCombineEnabled>
           {(provided) => (
             <div ref={provided.innerRef} className="dragContainer">
               {reserved.map((item, index) => <Draggable key={item.id} draggableId={item.id} index={index}>
