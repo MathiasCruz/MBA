@@ -1,71 +1,71 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
+import servico from '../service/httpService'
 import Card from '../components/Card';
-import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import Modal from '../components/Modal';
+
 
 function Today() {
-	const [cooking, setCooking] = useState([{
-		id: "1",
-		time: new Date(),
-		type: "Frango",
-	}, {
-		id: "2",
-		time: new Date(),
-		type: "Pernil",
-	}, {
-		id: "3",
-		time: new Date(),
-		type: "Picanha",
-	}]);
-	const [reserved, setReserved] = useState([]);
-	const [delivered, setDelivered] = useState([]);
+  const [cooking, setCooking] = useState([{}])
 
-	const actionList = {cooking: setCooking, reserved: setReserved, delivered: setDelivered}
+  useEffect(() => {
+    servico.buscarTodosOsProdutos().then(produtos => {
+      setCooking(produtos)
+    });
+  }, [])
 
-	const reorder = (list, startIndex, endIndex) => {
-		const result = Array.from(eval(list));
-		const [removed] = result.splice(startIndex, 1);
-		result.splice(endIndex, 0, removed);
-		actionList[list](result);
-	};
 
-	const move = (listOld, listNew, indexOld, indexNew) => {
-		let cpOld = Array.from(eval(listOld));
-		let cpNew = Array.from(eval(listNew));
+  const [reserved, setReserved] = useState([]);
+  const [delivered, setDelivered] = useState([]);
+  const [openModal, setModal] = useState(false);
 
-		let [removed] = cpOld.splice(indexOld, 1);
-		cpNew.splice(indexNew, 0, removed);
+  const actionList = { cooking: setCooking, reserved: setReserved, delivered: setDelivered }
 
-		actionList[listOld](cpOld);
-		if(listNew === "reserved") cpNew[indexNew].reservedTime = new Date()
-		if(listNew === "delivered") cpNew[indexNew].deliveredTime = new Date()
-		actionList[listNew](cpNew);
-	}
+  const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(eval(list));
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    actionList[list](result);
+  };
 
-	const onDragEnd = result => {
-		const {source, destination} = result;
-    if (result.combine) {
-      // super simple: just removing the dragging item
-      const items = [...result.source];
-      items.splice(result.source.index, 1);
-      setReserved({ items });
-      return;
+  const move = (listOld, listNew, indexOld, indexNew) => {
+    let cpOld = Array.from(eval(listOld));
+    let cpNew = Array.from(eval(listNew));
+
+    let [removed] = cpOld.splice(indexOld, 1);
+    cpNew.splice(indexNew, 0, removed);
+
+    actionList[listOld](cpOld);
+    if (listNew === "reserved") cpNew[indexNew].reservedTime = new Date()
+    if (listNew === "delivered") cpNew[indexNew].deliveredTime = new Date()
+    actionList[listNew](cpNew);
+  }
+
+  function HandleModal() {
+    console.log(!openModal)
+    setModal(!openModal);
+  }
+  const onDragEnd = result => {
+    const { source, destination } = result;
+
+    if (!destination) return;
+    if (source.droppableId === destination.droppableId) reorder(destination.droppableId, source.index, destination.index);
+    else {
+      move(source.droppableId, destination.droppableId, source.index, destination.index);
+      setModal(true);
     }
-		if (!destination) return;
+  };
 
-		if(source.droppableId === destination.droppableId) reorder(destination.droppableId, source.index, destination.index);
-		else move(source.droppableId, destination.droppableId, source.index, destination.index)
-	};
-
-	return <DragDropContext onDragEnd={onDragEnd}>
+  return <div className="container"><DragDropContext onDragEnd={onDragEnd}>
     <div className="flex around container">
       <div className="col">
         <h3>Disponíveis</h3>
         <Droppable droppableId="cooking" isCombineEnabled>
           {(provided) => (
             <div ref={provided.innerRef} className="dragContainer">
-              {cooking.map((item, index) => <Draggable key={item.id} draggableId={item.id} index={index}>
+              {cooking.map((item, index) => <Draggable key={item._id} draggableId={item._id} index={index}>
                 {(provided) => <div ref={provided.innerRef} {...provided.dragHandleProps} {...provided.draggableProps}>
-                  <Card {...item} />
+                  <Card {...item} handleModal={HandleModal} />
                 </div>}
               </Draggable>)}
             </div>
@@ -77,9 +77,9 @@ function Today() {
         <Droppable droppableId="reserved" isCombineEnabled>
           {(provided) => (
             <div ref={provided.innerRef} className="dragContainer">
-              {reserved.map((item, index) => <Draggable key={item.id} draggableId={item.id} index={index}>
+              {reserved.map((item, index) => <Draggable key={item._id} draggableId={item._id} index={index}>
                 {(provided) => <div ref={provided.innerRef} {...provided.dragHandleProps} {...provided.draggableProps}>
-                  <Card {...item} />
+                  <Card {...item} handleModal={HandleModal} />
                 </div>}
               </Draggable>)}
             </div>
@@ -91,9 +91,9 @@ function Today() {
         <Droppable droppableId="delivered">
           {(provided) => (
             <div ref={provided.innerRef} className="dragContainer">
-              {delivered.map((item, index) => <Draggable key={item.id} draggableId={item.id} index={index}>
+              {delivered.map((item, index) => <Draggable key={item._id} draggableId={item._id} index={index}>
                 {(provided) => <div ref={provided.innerRef} {...provided.dragHandleProps} {...provided.draggableProps}>
-                  <Card {...item} />
+                  <Card {...item} handleModal={HandleModal} />
                 </div>}
               </Draggable>)}
             </div>
@@ -102,6 +102,8 @@ function Today() {
       </div>
     </div>
   </DragDropContext>
+  {!!openModal && <Modal item={reserved} HandleModal={HandleModal} />}
+  </div>
 }
 
 export default Today;

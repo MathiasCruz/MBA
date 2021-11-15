@@ -16,7 +16,44 @@ body{
 	display: -ms-flexbox;
 	display: flex;
 }
+.modal{
+	min-height: 40vh;
+	min-width: 50vh;
+	max-height: 80vh;
+	overflow-y: auto;
+	background:#eee;
+}
+.formModal{
+	display: flex;
+	flex-flow: column;
+	padding: 10px;
+	}
 
+.formInput{
+	margin-bottom: 22px;
+	height: 2.5em;
+}
+.divImg{
+	width: 100px;
+	height: 100px;
+}
+.btnFechar{
+	background: #DF3038;
+	color:white;
+	font-size: larger;
+	border: 0;
+	width: 50px;
+}	
+.full{
+	width: 100%;
+	height: 100vh;
+	position: fixed;
+	top:0;
+	margin: 0;
+	z-index: 10;
+	left:0;
+	background: #0009;
+}
 .center {
 	-webkit-box-pack: center;
 	-ms-flex-pack: center;
@@ -130,6 +167,11 @@ main{
 
 .timeImg{
 	width: 20px;
+	margin-right: 15px;
+}
+.produtoImg{
+	width: 45px;
+	height: 30px;
 	margin-right: 15px;
 }
 
