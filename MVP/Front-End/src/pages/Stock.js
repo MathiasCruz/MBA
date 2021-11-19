@@ -11,8 +11,9 @@ function Stock() {
     }, []);
 
   })
-  let main;
+  let main = <><strong> Não há produtos cadastrados</strong></>;
   if (!loading) {
+    if (!data == undefined){
     main = 
     <>
     <div className="tableContainer">
@@ -48,7 +49,8 @@ function Stock() {
       </table>
     </div>
     </>
-  }
+    }
+}
   return <>{main}</>
 }
 

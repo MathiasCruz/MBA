@@ -4,8 +4,12 @@ const axiosInstance = axios.create({
     timeout: 10000,
   });
 async function buscarTodosOsProdutos() {
+    try{
      const {data } = await axiosInstance.get('/produto').catch(message => console.log(message));
      return data;
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 async function  HandleResponse(resp) {
