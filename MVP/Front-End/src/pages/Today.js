@@ -3,7 +3,7 @@ import servico from '../service/httpService'
 import Card from '../components/Card';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import Modal from '../components/Modal';
-
+import NoProductsMessage from '../components/NoProductsMessage';
 
 function Today() {
   const [cooking, setCooking] = useState([])
@@ -11,11 +11,12 @@ function Today() {
   useEffect(() => {
     servico.buscarTodosOsProdutos().then(produtos => {
       setCooking(produtos);
+      setProducts(produtos);
       setLoading(false);
     });
   }, [])
 
-
+  const [products, setProducts] = useState([]);
   const [reserved, setReserved] = useState([]);
   const [delivered, setDelivered] = useState([]);
   const [openModal, setModal] = useState(false);
@@ -56,9 +57,9 @@ function Today() {
       setModal(true);
     }
   };
-  let main = <><strong> Não há produtos cadastrados</strong></>;
+  let main = <NoProductsMessage/>;
   if (!loading) {
-    if (!cooking == undefined) {
+    if (products.length > 0) {
       main =
         <>
           <div className="container"><DragDropContext onDragEnd={onDragEnd}>

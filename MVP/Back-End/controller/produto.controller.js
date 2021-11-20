@@ -3,7 +3,8 @@ import service from '../services/produto.service.js'
 async function criarProduto(req, res, next) {
     try {
         const produto = req.body;
-        if (!produto.nome || !produto.quantidade && !produto.peso || !produto.categoria || !produto.valor) {
+        console.log(produto);
+        if (!produto.nome || (!produto.quantidade && !produto.peso) || !produto.categoria || !produto.valor) {
 
             throw new Error("Nome,quantidade, peso, categoria e valor do produto são obrigatórios");
         }

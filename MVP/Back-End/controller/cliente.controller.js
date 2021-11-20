@@ -30,38 +30,21 @@ async function atualizarCliente(req, res, next) {
     }
 }
 
-async function buscarClientePorId(req, res, next) {
+async function buscarCliente(req, res, next) {
     try {
-        const id = req.params.id;
-        if (!id) {
-            throw new Error("Id do cliente não especificado");
+        const id = req.query.id;
+        const telefone = req.query.telefone;
+        if (id) {
+            return res.send(await service.buscarClientePorId(id));
         }
-        res.send(await service.buscarClientePorId(id));
-    }
-    catch (err) {
-        next(err)
-    }
-}
-async function buscarClientePorTelefone(req, res, next) {
-    try { 
-        const telefone = req.params.telefone;
-        if(!telefone){
-            throw new Error("parametro telefone é obrigatório");
+        else if (telefone) {
+            return res.send(await service.buscarClientePorTelefone(telefone))
         }
-        res.send(await service.buscarClientePorTelefone(telefone));
+        res.send(await service.buscarTodosClientes());
     }
     catch (err) {
         next(err)
     }
 }
 
-async function buscarTodosClientes(req, res, next) {
-    try {
-        res.send(await service.buscarTodosClientes())
-    } catch (err) {
-        next(err)
-    }
-}
-
-
-export default { criarCliente, atualizarCliente, buscarClientePorId, buscarTodosClientes,buscarClientePorTelefone }
+export default { criarCliente, atualizarCliente, buscarCliente }

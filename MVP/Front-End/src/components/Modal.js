@@ -11,8 +11,9 @@ const Modal = (props) => {
                     <button className="btnFechar" onClick={props.HandleModal}>X</button>
                 </div>
                 <form className="formModal">
-                    <label>Nome</label><input className="formInput"></input>
                     <label>Telefone</label><input className="formInput"></input>
+                    <label>Nome</label><input className="formInput"></input>
+                    <button>Buscar cadastro</button>
                 </form>
                 <div className="flex formModal divImg">
                     {props.item.map((itens) => {

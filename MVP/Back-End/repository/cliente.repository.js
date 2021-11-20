@@ -4,7 +4,11 @@ import { ObjectId } from 'mongodb'
 async function criarCliente(cliente) {
     const conexao = await mongo.retornarConexao();
     try {
-        await conexao.db('Controle-Estoque').collection('Clientes').insertOne(cliente)
+        if (await verificarUsuarioJaCadastrado(cliente.telefone)) {
+            throw new Error("Cliente já cadastrado");
+        }
+        const clienteInserido = await conexao.db('Controle-Estoque').collection('Clientes').insertOne(cliente)
+        return clienteInserido.insertedId;
     }
     catch (ex) {
         throw ex;
@@ -56,10 +60,16 @@ async function buscarTodosClientes() {
 
 }
 
+async function verificarUsuarioJaCadastrado(telefone) {
+    const retorno = await buscarClientePorTelefone(telefone);
+    if (retorno)
+        return true;
+    return false;
+}
 async function buscarClientePorTelefone(telefone) {
     const conexao = await mongo.retornarConexao();
     try {
-        return await conexao.db('Controle-Estoque').collection('Clientes').find({ $text: { telefone } });
+        return await conexao.db('Controle-Estoque').collection('Clientes').findOne({ "telefone": telefone });
     }
     catch (ex) {
         throw ex;
