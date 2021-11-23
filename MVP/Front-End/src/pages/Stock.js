@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import servico from '../service/httpService.js'
 import NoProductsMessage from '../components/NoProductsMessage';
+import ModalProducts from '../components/ModalProducts.js';
 
 function Stock() {
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+  const [openModal, setModal] = useState(false);
+
   useEffect(() => {
     console.log("teste")
     servico.buscarTodosOsProdutos().then(produtos => {
@@ -15,12 +17,17 @@ function Stock() {
     });
   }, [])
 
+  function HandleModal() {
+    console.log(!openModal)
+    setModal(!openModal);
+  }
   let main = <NoProductsMessage />;
   if (!loading) {
     if (data.length > 0) {
       main =
         <>
           <div className="tableContainer">
+            <div><button onClick={HandleModal}>Cadastrar Produto</button></div>
             <table className="table">
               <thead>
                 <tr>
@@ -51,6 +58,7 @@ function Stock() {
                 })}
               </tbody>
             </table>
+            {!!openModal && <ModalProducts HandleModal={HandleModal} />}
           </div>
         </>
     }

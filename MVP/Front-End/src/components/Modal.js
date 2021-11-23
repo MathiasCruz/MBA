@@ -1,6 +1,27 @@
 /* eslint-disable */
-import React from "react";
+import React, { useState } from "react";
+import httpService from '../service/httpService.js'
+
 const Modal = (props) => {
+    const [errorMessage, setErroMessage] = useState("");
+    const [showError, setShowError] = useState(false);
+    const [user, setUser] = useState({});
+
+    async function searchUserAndUpdateScreen(evt) {
+        evt.preventDefault();
+        const telefone = document.getElementById('userTelefone').value;
+        if (!telefone) {
+            setErroMessage("É necessário informar um telefone");
+            setShowError(!showError);
+            return
+        }
+        const usuario = await httpService.buscarUsuarioPorTelefone(telefone);
+        if (!usuario) {
+            setErroMessage("Usuário não cadastrado");
+            setShowError(!showError);
+        }
+        setUser(usuario);
+    }
 
     console.log(props)
     return (
@@ -11,9 +32,9 @@ const Modal = (props) => {
                     <button className="btnFechar" onClick={props.HandleModal}>X</button>
                 </div>
                 <form className="formModal">
-                    <label>Telefone</label><input className="formInput"></input>
+                    <label>Telefone</label><input className="formInput" id="userTelefone"></input>
+                    <button onClick={searchUserAndUpdateScreen}>Buscar cadastro</button>
                     <label>Nome</label><input className="formInput"></input>
-                    <button>Buscar cadastro</button>
                 </form>
                 <div className="flex formModal divImg">
                     {props.item.map((itens) => {
@@ -24,7 +45,9 @@ const Modal = (props) => {
                     })}
                 </div>
                 <button>Fechar Reserva</button>
-            </div></div>)
+                <div>  {!!showError && <p className="mensagemErro">{errorMessage}</p>}</div>
+            </div>
+        </div>)
 }
 
 export default Modal;

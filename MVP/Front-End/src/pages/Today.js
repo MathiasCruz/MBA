@@ -108,7 +108,7 @@ function Today() {
               </div>
             </div>
           </DragDropContext>
-            {!!openModal && <Modal item={reserved} HandleModal={HandleModal} />}
+            {!!openModal && <Modal id='Modal' item={reserved} HandleModal={HandleModal} />}
           </div>
         </>
     }

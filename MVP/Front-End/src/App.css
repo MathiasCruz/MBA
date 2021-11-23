@@ -194,7 +194,9 @@ main{
 .pernil {
 	background: #6b30df;
 }
-
+.mensagemErro{
+	color: #df3030;
+}
 .picanha {
 	background: #30c7df;
 }
@@ -213,6 +215,7 @@ main{
 }
 
 .tableContainer {
+	flex-direction: row;
 	padding-top: 24px;
 }
 
