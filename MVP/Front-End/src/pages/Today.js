@@ -54,7 +54,6 @@ function Today() {
     if (source.droppableId === destination.droppableId) reorder(destination.droppableId, source.index, destination.index);
     else {
       move(source.droppableId, destination.droppableId, source.index, destination.index);
-      setModal(true);
     }
   };
   let main = <NoProductsMessage/>;

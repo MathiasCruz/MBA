@@ -18,17 +18,18 @@ async function cadastrarProduto(produto) {
         headers: {
             'Content-Type': 'application/json'
         }
-    }).catch(message => console.log(message));
+    }).catch(message => { throw new Error(message) });
     return data;
 }
 
 async function cadastrarPedido(pedido) {
 
-    const data = await axiosInstance.post('/pedido', JSON.stringify(pedido), {
+    await axiosInstance.post('/pedido', JSON.stringify(pedido), {
         headers: {
             'Content-Type': 'application/json'
         }
-    })
+    }).catch(message => { throw new Error(message) });
+    return true;
 }
 
-export default { buscarTodosOsProdutos, buscarUsuarioPorTelefone, cadastrarProduto,cadastrarPedido }
+export default { buscarTodosOsProdutos, buscarUsuarioPorTelefone, cadastrarProduto, cadastrarPedido }

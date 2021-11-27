@@ -16,8 +16,8 @@ const Modal = (props) => {
 
     async function searchUserAndUpdateScreen(evt) {
         evt.preventDefault();
-
-        if(!validateFields){
+        const telefone = document.getElementById('userTelefone').value;
+        if (!validateFields) {
             return;
         }
         const usuario = await httpService.buscarUsuarioPorTelefone(telefone);
@@ -28,14 +28,14 @@ const Modal = (props) => {
         setUser(usuario);
     }
 
-    function validateFields(){
+    function validateFields() {
         const telefone = document.getElementById('userTelefone').value;
-        const endereco =  document.getElementById('userEndereco').value;
+        const endereco = document.getElementById('userEndereco').value;
         if (!telefone) {
             updateErrorMessage("É necessário informar um telefone");
             return false;
         }
-        if(!endereco){
+        if (!endereco) {
             updateErrorMessage("É necessário informar um endereço")
             return false;
         }
@@ -47,32 +47,44 @@ const Modal = (props) => {
         setShowError(!showError);
     }
 
-    async function reserveProduct() {
+    async function reserveProduct(evt) {
         evt.preventDefault();
-        
-        if(!validateFields()){
-            return;
+        try {
+
+            if (!validateFields()) {
+                return;
+            }
+
+            let jsonReserved = fillReservedProduct();
+            const res = await httpService.cadastrarPedido(jsonReserved);
+            setErroMessage("Pedido cadastrado com sucesso");
+            setShowError(!showError);
+
+        } catch (err) {
+            setErroMessage(err);
+            setShowError(!showError);
         }
-        let jsonReserved = fillReserveProduct();
-        const  res = await httpService.cadastrarPedido(jsonReserved);
-    
     }
 
-    function fillReserveProduct() {
+    function fillReservedProduct() {
+        console.log(user)
         try {
-            objReserved = {
-                "id_cliente": user._objectId,
+            let objReserved = {
+                "id_cliente": user._id,
                 "dt_reserva": Date.now(),
                 "produtos": []
             };
-
-            props.map((item) => {
-                objReserved.produtos.push(item);
+            props.item.map((item) => {
+                let objProduto = {
+                    id_Produto: item._id,
+                    quantidade: 1
+                }
+                objReserved.produtos.push(objProduto);
             });
+            return objReserved;
         } catch (err) {
             console.log(err);
         }
-
     }
 
     return (
@@ -88,13 +100,15 @@ const Modal = (props) => {
                     <label>Nome</label><input className="formInput" id="userNome"></input>
                     <label>Endereço</label><input className="formInput" id="userEndereco"></input>
                 </form>
-                <div className="flex formModal divImg">
-                    {props.item.map((itens) => {
-                        return <span>{`${itens.nome} + 1`}</span>
-                        // <div className="divImg">
-                        //     <img alt="" src={`/${itens.categoria}.png`} className="produtoImg" />
-                        // </div>
-                    })}
+                <div className="flex formModal">
+                    <details><summary>Carrinho - Produtos</summary>
+                        {props.item.map((itens) => {
+                            return <span>{`${itens.nome} + 1`}</span>
+                            // <div className="divImg">
+                            //     <img alt="" src={`/${itens.categoria}.png`} className="produtoImg" />
+                            // </div>
+                        })}
+                    </details>
                 </div>
                 <button onClick={reserveProduct}>Fechar Reserva</button>
                 <div>  {!!showError && <p className="mensagemErro">{errorMessage}</p>}</div>

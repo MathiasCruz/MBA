@@ -6,9 +6,9 @@ async function criarPedido(pedido) {
     const conexao = await mongo.retornarConexao();
     try {
         await conexao.db('Controle-Estoque').collection('Pedidos').insertOne(pedido)
-        ws.on('open',function open(){
-            ws.send("Atualizou");
-        })
+        // ws.on('open',function open(){
+        //     ws.send("Atualizou");
+        // })
     }
     catch (ex) {
         throw ex;
