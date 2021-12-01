@@ -27,7 +27,7 @@ function Stock() {
       main =
         <>
           <div className="tableContainer">
-            <div><button onClick={HandleModal}>Cadastrar Produto</button></div>
+            <div className="ToRight marginRight"><button onClick={HandleModal} className="btnPostivo">Cadastrar Produto</button></div>
             <table className="table">
               <thead>
                 <tr>
@@ -39,9 +39,6 @@ function Stock() {
               <tbody>
                 {data.map((item) => {
                   return <tr key={item._id}>
-                    <td>
-                      <div className={"block " + item.nome.toLowerCase()} />
-                    </td>
                     <td>{item.nome}</td>
                     <td>
                       <div className="flex vcenter center">

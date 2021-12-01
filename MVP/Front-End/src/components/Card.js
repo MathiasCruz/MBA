@@ -1,10 +1,10 @@
 import React from 'react';
 
-function Card({ reservedTime, deliveredTime, categoria = '', nome = '', handleModal }) {
+function Card({ reservedTime, deliveredTime, categoria = '', nome = '', handleModal,_id }) {
   const handleTime = time => { if (time) time.toLocaleTimeString().split(":").splice(0, 2).join(":"); }
 
 
-  return <div className="card" onDoubleClick={() => { if (handleModal) handleModal() }}>
+  return <div className="card" onDoubleClick={() => { if (handleModal) handleModal(_id) }}>
     <div className={nome.toLowerCase() + ' line'}> </div>
     <div>
       <strong className="title">{nome}</strong>

@@ -37,12 +37,26 @@ body{
 	width: 100px;
 	height: 100px;
 }
+.ToRight{
+	float:right
+}
+.marginRight{
+	margin-right: 25px;
+}
 .btnFechar{
 	background: #DF3038;
 	color:white;
 	font-size: larger;
 	border: 0;
 	width: 50px;
+}
+.btnPostivo{
+	background: #304edf;
+	color: white;
+	padding: 0.5em;
+	border: 0;
+	border-radius: 4px;
+	margin-top: 26px;
 }	
 .full{
 	width: 100%;

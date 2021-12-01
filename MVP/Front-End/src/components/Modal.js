@@ -3,7 +3,9 @@ import React, { useState, useEffect } from "react";
 import httpService from '../service/httpService.js'
 
 const Modal = (props) => {
+    console.log(props.item)
     const [errorMessage, setErroMessage] = useState("");
+    const [shop, setShop] = useState({})
     const [showError, setShowError] = useState(false);
     const [user, setUser] = useState({});
 
@@ -72,15 +74,8 @@ const Modal = (props) => {
             let objReserved = {
                 "id_cliente": user._id,
                 "dt_reserva": Date.now(),
-                "produtos": []
+                "produtos": props.item
             };
-            props.item.map((item) => {
-                let objProduto = {
-                    id_Produto: item._id,
-                    quantidade: 1
-                }
-                objReserved.produtos.push(objProduto);
-            });
             return objReserved;
         } catch (err) {
             console.log(err);
@@ -95,22 +90,25 @@ const Modal = (props) => {
                     <button className="btnFechar" onClick={props.HandleModal}>X</button>
                 </div>
                 <form className="formModal">
-                    <label>Telefone</label><input className="formInput" id="userTelefone"></input>
-                    <button onClick={searchUserAndUpdateScreen}>Buscar cadastro</button>
+                    <label>Telefone</label><input onBlur={searchUserAndUpdateScreen} className="formInput" id="userTelefone"></input>
                     <label>Nome</label><input className="formInput" id="userNome"></input>
                     <label>Endereço</label><input className="formInput" id="userEndereco"></input>
                 </form>
                 <div className="flex formModal">
                     <details><summary>Carrinho - Produtos</summary>
-                        {props.item.map((itens) => {
-                            return <span>{`${itens.nome} + 1`}</span>
-                            // <div className="divImg">
-                            //     <img alt="" src={`/${itens.categoria}.png`} className="produtoImg" />
-                            // </div>
-                        })}
+                        <table className="table">
+                            {props.item.map((itens) => {
+                                return <tr key={itens._id} id={itens._id}>
+                                    <td>{itens.qtdReservado}</td>
+                                    <td>{itens.nome} </td>
+                                    <td>R$ {itens.qtdReservado * itens.valor}</td>
+                                </tr>
+
+                            })}
+                        </table>
                     </details>
                 </div>
-                <button onClick={reserveProduct}>Fechar Reserva</button>
+                <button onClick={reserveProduct} className="btnPostivo">Fechar Reserva</button>
                 <div>  {!!showError && <p className="mensagemErro">{errorMessage}</p>}</div>
             </div>
         </div>)

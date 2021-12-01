@@ -14,7 +14,7 @@ async function buscarUsuarioPorTelefone(telefone) {
 }
 
 async function cadastrarProduto(produto) {
-    const [data] = await axiosInstance.post('/produto', JSON.stringify(produto), {
+    const data = await axiosInstance.post('/produto', JSON.stringify(produto), {
         headers: {
             'Content-Type': 'application/json'
         }

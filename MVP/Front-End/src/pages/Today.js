@@ -21,6 +21,7 @@ function Today() {
   const [delivered, setDelivered] = useState([]);
   const [openModal, setModal] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(null);
   const actionList = { cooking: setCooking, reserved: setReserved, delivered: setDelivered }
 
   const reorder = (list, startIndex, endIndex) => {
@@ -38,25 +39,57 @@ function Today() {
     cpNew.splice(indexNew, 0, removed);
 
     actionList[listOld](cpOld);
-    if (listNew === "reserved") cpNew[indexNew].reservedTime = new Date()
+    if (listNew === "reserved") {
+      cpNew[indexNew].reservedTime = new Date()
+      cpNew[indexNew].qtdReservado = 1
+      cpNew[indexNew].produtos = [cpNew[indexNew]]
+    }
     if (listNew === "delivered") cpNew[indexNew].deliveredTime = new Date()
     actionList[listNew](cpNew);
   }
 
-  function HandleModal() {
-    console.log(!openModal)
+  const moveAndCombine = (listOld, listNew, indexOld, indexNew) => {
+    let cpOld = Array.from(eval(listOld));
+    let cpNew = Array.from(eval(listNew));
+
+    let [removed] = cpOld.splice(indexOld, 1);
+
+    actionList[listOld](cpOld);
+    if (listNew === "reserved") {
+      console.log(removed)
+      cpNew = cpNew.map((item) => {
+        if (item._id === indexNew) {
+          return { ...item, produtos: [...item.produtos, { ...removed, qtdReservado: 1 }] }
+        }
+        else return item
+      })
+      if (listOld === listNew) {
+        cpNew.splice(indexOld, 1);
+      }
+    }
+    console.log(cpNew)
+    actionList[listNew](cpNew);
+  }
+
+  function HandleModal(id) {
+    setCurrentIndex(id);
+    console.log(!openModal);
     setModal(!openModal);
   }
   const onDragEnd = result => {
-    const { source, destination } = result;
-
+    const { source, destination, combine } = result;
+    console.log(source);
+    console.log(result);
+    if (combine) {
+      moveAndCombine(source.droppableId, combine.droppableId, source.index, combine.draggableId)
+    }
     if (!destination) return;
     if (source.droppableId === destination.droppableId) reorder(destination.droppableId, source.index, destination.index);
     else {
       move(source.droppableId, destination.droppableId, source.index, destination.index);
     }
   };
-  let main = <NoProductsMessage/>;
+  let main = <NoProductsMessage />;
   if (!loading) {
     if (products.length > 0) {
       main =
@@ -107,7 +140,7 @@ function Today() {
               </div>
             </div>
           </DragDropContext>
-            {!!openModal && <Modal id='Modal' item={reserved} HandleModal={HandleModal} />}
+            {!!openModal && <Modal id='Modal' item={reserved.find(item => item._id === currentIndex).produtos} HandleModal={HandleModal} />}
           </div>
         </>
     }
