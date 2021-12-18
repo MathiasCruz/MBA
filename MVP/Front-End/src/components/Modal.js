@@ -11,11 +11,22 @@ const Modal = (props) => {
 
     useEffect(() => {
         if (Object.keys(user).length > 0) {
-            document.getElementById("userNome").value = user.nome;
-            document.getElementById("userEndereco").value = user.endereco;
+            if (user.nome){
+                document.getElementById("userNome").value = user.nome;
+            }
+            if(user.endereco){
+                document.getElementById("userEndereco").value = user.endereco;
+            }
         }
     }, [user]);
 
+    function calculateTotal(){
+        var total = props.item.reduce(function(total,item){
+            return total + Number(item.valor * item.qtdReservado);
+        },0)
+        return total
+        }
+    
     async function searchUserAndUpdateScreen(evt) {
         evt.preventDefault();
         const telefone = document.getElementById('userTelefone').value;
@@ -58,24 +69,29 @@ const Modal = (props) => {
             }
 
             let jsonReserved = fillReservedProduct();
+            console.log(jsonReserved)
             const res = await httpService.cadastrarPedido(jsonReserved);
             setErroMessage("Pedido cadastrado com sucesso");
             setShowError(!showError);
 
         } catch (err) {
-            setErroMessage(err);
+            setErroMessage("Não foi possivel o cadastro do pedido");
+            console.log(err);
             setShowError(!showError);
         }
     }
 
     function fillReservedProduct() {
-        console.log(user)
+        console.log(props.item);
+        console.log(props.item.produtos)
         try {
             let objReserved = {
                 "id_cliente": user._id,
                 "dt_reserva": Date.now(),
-                "produtos": props.item
+                "produtos" :props.item.produtos
+              
             };
+            console.log(objReserved);
             return objReserved;
         } catch (err) {
             console.log(err);
@@ -107,6 +123,7 @@ const Modal = (props) => {
                             })}
                         </table>
                     </details>
+                    <div>Total : {calculateTotal()}</div>
                 </div>
                 <button onClick={reserveProduct} className="btnPostivo">Fechar Reserva</button>
                 <div>  {!!showError && <p className="mensagemErro">{errorMessage}</p>}</div>

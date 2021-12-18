@@ -23,7 +23,6 @@ async function cadastrarProduto(produto) {
 }
 
 async function cadastrarPedido(pedido) {
-
     await axiosInstance.post('/pedido', JSON.stringify(pedido), {
         headers: {
             'Content-Type': 'application/json'

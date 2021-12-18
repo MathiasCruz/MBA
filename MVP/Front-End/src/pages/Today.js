@@ -43,7 +43,7 @@ function Today() {
       cpNew[indexNew].reservedTime = new Date()
       cpNew[indexNew].qtdReservado = 1
       cpNew[indexNew].produtos = [cpNew[indexNew]]
-    }
+      }
     if (listNew === "delivered") cpNew[indexNew].deliveredTime = new Date()
     actionList[listNew](cpNew);
   }
