@@ -5,7 +5,7 @@ async function verificarEstoqueDisponivel(pedido) {
         for (let produto of pedido.produtos) {
             let produtoEstoque = await produtoRepository.buscarProdutoPorId(produto._id);
 
-            if (produtoEstoque.quantidade < produto.quantidade) {
+            if (produtoEstoque.quantidade < produto.qtdReservado) {
                 return false
             }
 
@@ -22,7 +22,7 @@ async function atualizarEstoqueProduto(pedido) {
     for (let produto of pedido.produtos) {
 
         let produtoEstoque = await produtoRepository.buscarProdutoPorId(produto._id);
-        produtoEstoque.quantidade = (produtoEstoque.quantidade - produto.quantidade);
+        produtoEstoque.quantidade = (produtoEstoque.quantidade - produto.qtdReservado);
         await produtoRepository.atualizarProduto(produtoEstoque);
 
     }

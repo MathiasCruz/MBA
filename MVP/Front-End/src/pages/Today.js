@@ -42,7 +42,15 @@ function Today() {
     if (listNew === "reserved") {
       cpNew[indexNew].reservedTime = new Date()
       cpNew[indexNew].qtdReservado = 1
-      cpNew[indexNew].produtos = [cpNew[indexNew]]
+      cpNew[indexNew].produtos = [{...cpNew[indexNew]}]
+      if(cpNew[indexNew].quantidade > 0){
+        const stock = {...removed}
+        delete stock.reservedTime;
+        stock.quantidade -= 1;
+        cpOld.push(stock);
+        actionList[listOld](cpOld);
+        
+      }
       }
     if (listNew === "delivered") cpNew[indexNew].deliveredTime = new Date()
     actionList[listNew](cpNew);
@@ -53,12 +61,22 @@ function Today() {
     let cpNew = Array.from(eval(listNew));
 
     let [removed] = cpOld.splice(indexOld, 1);
-
+    console.log(removed);
     actionList[listOld](cpOld);
+
     if (listNew === "reserved") {
       console.log(removed)
       cpNew = cpNew.map((item) => {
+        
         if (item._id === indexNew) {
+          if(removed.quantidade > 0){
+            const stock = {...removed}
+            delete stock.reservedTime;
+            stock.quantidade -= 1;
+            cpOld.push(stock);
+            actionList[listOld](cpOld);
+          }
+
           return { ...item, produtos: [...item.produtos, { ...removed, qtdReservado: 1 }] }
         }
         else return item

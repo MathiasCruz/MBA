@@ -5,7 +5,8 @@ import ws from '../sockets.js'
 async function criarPedido(pedido) {
     const conexao = await mongo.retornarConexao();
     try {
-        await conexao.db('Controle-Estoque').collection('Pedidos').insertOne(pedido)
+        let newPedido = {...pedido,id_cliente:new ObjectId(pedido.id_cliente),produtos:pedido.produtos.map((itens)=>{return {_id:new ObjectId(itens.id_produto),quantidade:itens.qtdReservado,valor:itens.valor}})}
+        await conexao.db('Controle-Estoque').collection('Pedidos').insertOne(newPedido)
         // ws.on('open',function open(){
         //     ws.send("Atualizou");
         // })

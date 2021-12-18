@@ -8,7 +8,7 @@ const Modal = (props) => {
     const [shop, setShop] = useState({})
     const [showError, setShowError] = useState(false);
     const [user, setUser] = useState({});
-
+   
     useEffect(() => {
         if (Object.keys(user).length > 0) {
             if (user.nome){
@@ -88,7 +88,7 @@ const Modal = (props) => {
             let objReserved = {
                 "id_cliente": user._id,
                 "dt_reserva": Date.now(),
-                "produtos" :props.item.produtos
+                "produtos" :[...props.item]
               
             };
             console.log(objReserved);
